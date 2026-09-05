@@ -1,14 +1,15 @@
 {
-  "name": "sites-project",
+  "name": "little-rome",
   "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
-    "build": "vinext build",
-    "start": "wrangler dev --config dist/server/wrangler.json",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "start": "vite preview --host 127.0.0.1",
+    "check:mechanics": "node scripts/check-mechanics.mjs",
     "lint": "oxlint",
     "format": "oxfmt"
   },

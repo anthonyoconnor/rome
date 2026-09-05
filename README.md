@@ -1,0 +1,42 @@
+# Little Rome
+
+A casual Roman town-building game. Connect neighborhoods, provide services, cultivate appeal, and grow eight townhouses into a prosperous town of 256 residents.
+
+## Run
+
+```sh
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite. All game state exists only during the current session. The town pauses when the page is hidden. Sound starts muted.
+
+## Controls
+
+- **1–8:** choose roads, homes, well, market, garden, workshop, bathhouse, or theater.
+- **Click:** build or inspect. Drag with the road tool to draw connected streets.
+- **Right-drag / WASD / arrow keys:** move the camera. Scroll or **+/−** to zoom.
+- **Space:** pause. **Esc:** inspect. **G:** building grid. **B:** demolition.
+- In a narrow window, the **Town** button opens the charter and inspector.
+
+Homes require water, then a market, then baths and 30 appeal, then a theater and 60 appeal. Service reach follows roads; capacity includes the empty beds reserved for each home's current tier. Gardens help nearby homes, while workshops provide jobs and create noise. The inspector explains exactly what is missing.
+
+## Build and verify
+
+```sh
+npm run check:mechanics
+npm run build
+npm start
+```
+
+The mechanics checks cover construction/refunds, routed coverage, grace periods, stable capacity allocation, appeal, suspension, and a complete charter using starting funds and earned income. The static build is written to `dist/`.
+
+## Change the game
+
+- `src/game/config.ts`: prices, service reach/capacity, jobs, tax rates, and housing tiers.
+- `src/game/simulation.ts`: deterministic town rules, progression, and economy.
+- `src/game/render.ts`: original canvas terrain, Roman buildings, camera, and animation.
+- `src/game/Game.tsx`: controls, inspector, charter, and guidance.
+- `app/globals.css`: interface styling and responsive layout.
+
+See [the prototype plan](PROTOTYPE_PLAN.md) for scope and inspiration. No accounts, server application, or production infrastructure are needed.
