@@ -37,3 +37,15 @@
  .dock-topline>span:last-child{display:block;font-size:10px;max-width:64%}.build-dock{max-height:210px}
  .map-bottom{bottom:220px}.overlay-select{max-width:155px;font-size:11px!important}.bottom-bar{height:36px}
 }
+/* Final art pass: warm paper, readable controls, and quieter supporting chrome. */
+.town-panel{background:radial-gradient(ellipse at 20% 5%,#fffaf0 0,transparent 52%),linear-gradient(120deg,#f8f4e7,#f0ead8)}
+.topbar{background:linear-gradient(100deg,#20392f,#2b4538 58%,#263e34);border-bottom-color:#aa915d}
+.description{font-size:14px;line-height:1.75;color:#737861}
+.inspector .connection{font-size:13px}.inspector .needs-list>div{font-size:13px}.inspector .growth-box p,.inspector .growth-box li{font-size:12px}.inspector .finance-lines>div{font-size:13px}
+.build-tool>span{font-size:12px}.build-tool>small{font-size:11px}.build-tool kbd{color:#9b9477}.build-tool.active{box-shadow:inset 0 1px #fff9,0 2px 5px #6a7d391b}
+.art-stage{background:radial-gradient(ellipse,#dfe4c98a,transparent 67%)}.charter-card{background:linear-gradient(125deg,#edebda,#e8e6d1)}
+.game-dialog [data-slot=dialog-description],.game-dialog [data-slot=alert-dialog-description]{font-size:16px}.help-grid p{font-size:14px}.help-note{font-size:13px}
+@media(max-width:1150px){.description{font-size:14px}.build-tool>span{font-size:11px}}
+@media(max-width:900px){.town-panel .description{font-size:14px}.build-tool>span{font-size:10px}}
+@media(max-width:700px){.build-tool>span{font-size:12px}.build-tool>small{font-size:11px}.town-panel .description{font-size:14px}.town-panel .ledger>div:not(:first-child){font-size:12px}.town-panel .charter-card>p{font-size:13px}.town-panel .charter-card h3{font-size:19px}.town-panel .section-heading{font-size:10px}.build-dock{box-shadow:0 5px 30px #233e332b,inset 0 1px #fff}.map-caption{display:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
