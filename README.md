@@ -47,6 +47,12 @@ See [the prototype plan](PROTOTYPE_PLAN.md) for scope and inspiration. No accoun
 
 ## Art direction
 
+### 3D character trial
+
+Open `/trials/citizens-3d/` to review six actual 3D citizens on a stone road. Choose walking, carrying or standing; use the close-up and game-scale views, pause, step a frame, or slow the animation down. This is a separate visual trial and does not change the town renderer. See [trial notes](public/trials/citizens-3d/README.md). Run `node scripts/check-citizens-3d.mjs` for the gait and rig checks.
+
+### Current town
+
 The game uses detailed rendered isometric sprites with real transparency, inspired by the three [finished-game visual concepts](art/finished-game-concepts/PROMPTS.md). The map combines continuous meadow and river materials, connected stone paving, olive and cypress groves, small ground vegetation, and layered building shadows. Top-tier housing has three architectural variants. Citizens follow the actual connected streets; workshops smoke and the river moves. Buildings remain individually selectable and placeable.
 
 For quick visual iteration in the development server, use `?scene=early`, `?scene=growing`, or `?scene=flourishing`. These views construct towns through the real simulation with normal building costs and earned income. They begin paused and remain playable. Production builds always begin with a fresh town.
