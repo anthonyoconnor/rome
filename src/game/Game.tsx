@@ -23,16 +23,16 @@ export default function Game(){
  const canvas=useRef<HTMLCanvasElement>(null),stage=useRef<HTMLDivElement>(null),renderer=useRef<Renderer|null>(null),city=useRef<City|null>(null);
  if(!city.current)city.current=createCity();
  const view=useRef<View>({camera:{x:0,y:0,zoom:.8},hover:null,tool:'inspect',selected:null,overlay:'none',grid:false,time:0});
- const [,redraw]=useState(0),[help,setHelp]=useState(false),[restart,setRestart]=useState(false),[message,setMessage]=useState(''),[muted,setMuted]=useState(true),[dismissed,setDismissed]=useState(0),[charterOpen,setCharterOpen]=useState(false);
+ const [,redraw]=useState(0),[help,setHelp]=useState(false),[restart,setRestart]=useState(false),[message,setMessage]=useState(''),[muted,setMuted]=useState(true),[dismissed,setDismissed]=useState(0),[charterOpen,setCharterOpen]=useState(false),[sidebarOpen,setSidebarOpen]=useState(false);
  const modal=useRef(false),muteRef=useRef(true),audioRef=useRef<AudioContext|null>(null);
  modal.current=help||restart||!!(city.current.completed&&!city.current.continued);muteRef.current=muted;
  const update=()=>redraw(v=>v+1);
  function sound(type:'build'|'remove'|'up'='build'){if(muteRef.current)return;try{const ac=audioRef.current??new AudioContext();audioRef.current=ac;void ac.resume();const oscillator=ac.createOscillator(),gain=ac.createGain();oscillator.connect(gain);gain.connect(ac.destination);oscillator.type='sine';oscillator.frequency.setValueAtTime(type==='up'?660:type==='remove'?190:440,ac.currentTime);oscillator.frequency.exponentialRampToValueAtTime(type==='remove'?100:880,ac.currentTime+.12);gain.gain.setValueAtTime(.045,ac.currentTime);gain.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.22);oscillator.start();oscillator.stop(ac.currentTime+.23);}catch{/* Sound is optional. */}}
- function tool(kind:View['tool']){view.current.tool=kind;view.current.selected=null;setMessage('');update();}
+ function tool(kind:View['tool']){view.current.tool=kind;view.current.selected=null;setMessage('');setSidebarOpen(false);update();}
  function center(){const r=renderer.current;if(!r)return;const z=Math.min(1.04,Math.max(.45,Math.min(r.width/1420,r.height/760)));view.current.camera={x:r.width/2,y:r.height*.47-512*z,zoom:z};update();}
  function zoom(factor:number,sx?:number,sy?:number){const r=renderer.current;if(!r)return;const c=view.current.camera,x=sx??r.width/2,y=sy??r.height/2,next=Math.min(2.2,Math.max(.38,c.zoom*factor));c.x=x-(x-c.x)*next/c.zoom;c.y=y-(y-c.y)*next/c.zoom;c.zoom=next;update();}
  function buildAt(x:number,y:number){const c=city.current!,v=view.current;
-  if(v.tool==='inspect'){v.selected=buildingAt(c,x,y)?.id??null;setMessage('');}
+  if(v.tool==='inspect'){v.selected=buildingAt(c,x,y)?.id??null;if(v.selected)setSidebarOpen(true);setMessage('');}
   else if(v.tool==='demolish'){const b=buildingAt(c,x,y);if(b?.kind==='forum'){setMessage('The Forum is the heart of your town.');return;}if(demolish(c,x,y)){sound('remove');setMessage('Space cleared · 75% of construction cost returned');v.selected=null;}}
   else {const result=place(c,v.tool,x,y);if(!result.valid){if(result.reason!=='This space is already occupied')setMessage(result.reason);}else {sound();setMessage(result.connected?'':result.reason);}}
   update();
@@ -40,7 +40,7 @@ export default function Game(){
  useEffect(()=>{
   if(!canvas.current||!stage.current)return;
   const r=new Renderer(canvas.current);renderer.current=r;
-  let first=true;const resize=new ResizeObserver(([entry])=>{r.resize(entry.contentRect.width,entry.contentRect.height);if(first){center();first=false;}});resize.observe(stage.current);
+  let first=true;const resize=new ResizeObserver(([entry])=>{const previousWidth=r.width,previousHeight=r.height;r.resize(entry.contentRect.width,entry.contentRect.height);if(first){center();first=false;}else{view.current.camera.x+=(r.width-previousWidth)/2;view.current.camera.y+=(r.height-previousHeight)/2;}});resize.observe(stage.current);
   let id=0,last=performance.now(),accumulator=0,lastUI=0,lastEvent=0;
   const frame=(now:number)=>{const dt=Math.min(.1,(now-last)/1000);last=now;const c=city.current!;
    if(!document.hidden&&!modal.current){accumulator+=dt*c.speed;while(accumulator>=.5){tick(c,.5);accumulator-=.5;}view.current.time+=dt;}
@@ -78,6 +78,16 @@ export default function Game(){
  const lastNotice=[...c.events].reverse().find(e=>e.id>dismissed&&e.type!=='growth'&&e.type!=='win');
  const appeal=b?appealDetails(c,b):null;
  const houses=c.buildings.filter(b=>b.kind==='house'),empty=houses.length===0;
+ const has=(kind:Kind)=>c.buildings.some(b=>b.kind===kind&&b.connected&&!b.paused);
+ const nextBuild:Kind=empty?'house':!has('well')?'well':!has('market')?'market':c.peak>=64&&!has('bath')?'bath':c.peak>=128&&!has('theater')?'theater':houses.length<8?'house':'garden';
+ const guidance:Record<string,[string,string,string]>={
+  house:[empty?'Every city starts small.':'A little room to grow.',empty?'The Forum is ready. Build a few homes along the street, then add a well to welcome your first residents.':'More homes bring more neighbors. Keep them within reach of water and markets, and leave room for future services.',empty?'Build your first homes':'Welcome more neighbors'],
+  well:['Bring fresh water home.','A connected well welcomes your first residents. The blue streets show how far its water will reach.','Add a neighborhood well'],
+  market:['Give neighbors a gathering place.','A market lets huts become cottages. Put it beside a connected road, within reach of your homes.','Build your first market'],
+  bath:['A little civic comfort.','Bathhouses and 30 appeal help cottages become courtyard homes. Gardens and the Forum make good neighbors.','Build a bathhouse'],
+  theater:['Let your town find its voice.','A theater and 60 appeal create townhouses. Add gardens where neighborhoods need a little more beauty.','Build a theater'],
+  garden:['Good streets. Happy neighbors.','Select a home to see what it needs next. Gardens add appeal; service buildings need spare capacity for upgrades.','Plant a little beauty'],
+ };
  const seasons=['Spring','Summer','Autumn','Winter'];
  const overlayLabels:Record<View['overlay'],string>={none:'Natural view',roads:'Road connections',well:'Water coverage',market:'Market coverage',bath:'Bath coverage',theater:'Theater coverage',appeal:'Neighborhood appeal'};
  return <TooltipProvider delay={250}><main className="game-shell">
@@ -91,7 +101,8 @@ export default function Game(){
    <div className="top-actions"><Tip label={muted?'Enable sound':'Mute sound'}><button className="icon-button" onClick={()=>{setMuted(!muted);muteRef.current=!muted;if(muted)sound();}} aria-label={muted?'Enable sound':'Mute sound'}>{muted?<VolumeX/>:<Volume2/>}</button></Tip><Tip label="How to build your town"><button className="icon-button" onClick={()=>setHelp(true)} aria-label="Help"><CircleHelp/></button></Tip><Tip label="Start a new town"><button className="icon-button" onClick={()=>setRestart(true)} aria-label="Restart town"><RotateCcw/></button></Tip></div>
   </header>
   <div className="game-body">
-   <aside className="town-panel">
+   <aside className={`town-panel ${sidebarOpen?'mobile-open':''}`}>
+    <button className="mobile-panel-close" onClick={()=>setSidebarOpen(false)} aria-label="Close town panel"><X size={18}/></button>
     <div className="town-heading"><span className="eyebrow">THE RIVER PROVINCE</span><h2>Little Rome<span>Ⅰ</span></h2><div className="town-status"><span/>{c.completed?'A flourishing town':c.peak>=128?'A growing town':c.peak>=64?'A lively settlement':'A new beginning'}</div></div>
     <section className="charter-card"><div className="section-heading"><span><Flag size={15}/> TOWN CHARTER</span><button onClick={()=>setCharterOpen(!charterOpen)} aria-label={charterOpen?'Collapse charter':'Show all charter goals'}>{allDone}/7 <ChevronRight size={14} className={charterOpen?'rotate':''}/></button></div><h3>{c.completed?'Your charter is fulfilled':activeGoal.title}</h3><p>{activeGoal.text}</p><Progress value={activeGoal.value/activeGoal.target*100} aria-label={activeGoal.text}/><div className="progress-meta"><span>{activeGoal.value} / {activeGoal.target}</span><span>{c.completed?'Beautifully done':'One step at a time'}</span></div>{charterOpen&&<ol className="charter-list">{goals.map(g=><li key={g.title} className={g.done?'done':''}>{g.done?<Check size={14}/>:<span className="goal-dot"/>}<span>{g.text}</span><small>{g.value}/{g.target}</small></li>)}</ol>}</section>
     <div className="panel-divider"><span>{b?'IN YOUR TOWN':buildingTool?'PLAN YOUR NEXT ADDITION':'YOUR NEXT CHAPTER'}</span></div>
@@ -109,13 +120,14 @@ export default function Game(){
      </>:buildingTool?<>
       <h3>{DEFS[buildingTool].name}</h3><div className="art-stage"><Art kind={buildingTool} tier={1} large/><span className="tier-badge">{DEFS[buildingTool].size} × {DEFS[buildingTool].size} TILES</span></div><p className="description">{DEFS[buildingTool].description}</p><div className="finance-lines"><div><span>Construction</span><strong><Coins size={14}/> {DEFS[buildingTool].cost}</strong></div><div><span>Monthly upkeep</span><strong>{DEFS[buildingTool].upkeep}</strong></div>{DEFS[buildingTool].range&&<div><span>Reach along roads</span><strong>{DEFS[buildingTool].range} steps</strong></div>}</div><div className="builder-note"><MousePointer2 size={17}/><p>{buildingTool==='road'?'Click and drag to lay a street.':'Choose a clear space beside a connected road.'}<br/><small>Esc to return to inspection</small></p></div>
      </>:v.tool==='demolish'?<><h3>Make room for a new idea</h3><div className="empty-emblem"><Hammer size={34}/></div><p className="description">Click a building or drag across roads to clear them. You receive 75% of their construction cost.</p><p className="builder-note">Residents in demolished homes leave immediately. Check your service connections before removing roads.</p></>:<>
-      <div className="welcome-art"><Art kind={empty?'house':'forum'} tier={empty?1:3} large/><span className="art-spark">✦</span></div><h3>{empty?'Every city starts small.':'Good streets. Happy neighbors.'}</h3><p className="description">{empty?'The Forum is ready. Build a few homes along the street, then add a well to welcome your first residents.':'Select a building to see how it is doing, or plan your next neighborhood.'}</p><button className="primary-button wide" onClick={()=>tool(empty?'house':'road')}>{empty?'Build your first homes':'Extend your town'}<ArrowUpRight size={17}/></button><div className="quiet-tip"><Leaf size={17}/><p>{empty?'Leave a little room for gardens and gathering places. Your town will thank you.':'Beautiful neighborhoods grow. Keep workshops a few streets away from your best homes.'}</p></div>
+      <div className="welcome-art"><Art kind={nextBuild} tier={empty?1:3} large/><span className="art-spark">✦</span></div><h3>{guidance[nextBuild][0]}</h3><p className="description">{guidance[nextBuild][1]}</p><button className="primary-button wide" onClick={()=>tool(nextBuild)}>{guidance[nextBuild][2]}<ArrowUpRight size={17}/></button><div className="quiet-tip"><Leaf size={17}/><p>{empty?'Leave a little room for gardens and gathering places. Your town will thank you.':'Beautiful neighborhoods grow. Keep workshops a few streets away from your best homes.'}</p></div>
      </>}
     </section>
     <div className="ledger"><div className="section-heading"><span><Coins size={14}/> TOWN ACCOUNTS</span><small>PER MONTH</small></div><div><span>Taxes & workshops</span><strong className="good">+{c.income.toFixed(1)}</strong></div><div><span>Public services</span><strong>−{c.upkeep.toFixed(1)}</strong></div><div className="ledger-total"><span>Balance</span><strong className={c.net<0?'negative':'good'}>{coin(c.net)}</strong></div></div>
    </aside>
    <div className="map-area" ref={stage}>
     <canvas ref={canvas} tabIndex={0} className={`town-canvas ${v.tool==='inspect'?'pan-cursor':'build-cursor'}`} aria-label="Town map. Use build buttons or keys 1 to 8, click to place, drag streets, right-drag to pan, and scroll to zoom."/>
+    <button className="mobile-town-button" onClick={()=>setSidebarOpen(!sidebarOpen)} aria-label="Open town panel"><Landmark size={16}/> Town <span>{allDone}/7</span></button>
     <div className="map-top"><div className="date-plaque"><Sun size={19}/><div><strong>{seasons[Math.floor(c.month/3)%4]}, Year {Math.floor(c.month/12)+1}</strong><span>{c.speed===0?'A moment to plan':'On the banks of the Tiber'}</span></div></div><div className="view-controls"><Select value={v.overlay} onValueChange={value=>{v.overlay=value as View['overlay'];v.selected=null;update();}}><SelectTrigger className="overlay-select" aria-label="Map overlay"><Map size={16}/><SelectValue>{overlayLabels[v.overlay]}</SelectValue></SelectTrigger><SelectContent className="overlay-menu">{Object.entries(overlayLabels).map(([value,label])=><SelectItem key={value} value={value}>{label}</SelectItem>)}</SelectContent></Select><Tip label="Show building grid · G"><button className={`map-button ${v.grid?'active':''}`} onClick={()=>{v.grid=!v.grid;update();}} aria-label="Toggle grid" aria-pressed={v.grid}><Grid2X2 size={18}/></button></Tip></div></div>
     {v.overlay!=='none'&&<div className="overlay-legend">{v.overlay==='appeal'?<><span className="appeal-scale"/>Low appeal → high appeal</>:<><i/>{v.overlay==='roads'?'Connected streets · red streets are disconnected':'Highlighted streets are within service reach'}</>}</div>}
     {lastNotice&&<div className="notice" role="status"><Sparkles size={21}/><div><strong>{lastNotice.title}</strong><p>{lastNotice.message}</p></div><button onClick={()=>setDismissed(lastNotice.id)} aria-label="Dismiss notice"><X size={15}/></button></div>}
