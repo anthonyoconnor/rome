@@ -9,7 +9,7 @@
 </head>
 <body>
  <main id="trial">
-  <canvas id="scene" aria-label="A three-dimensional Roman neighborhood with animated buildings and walking citizens"></canvas>
+  <canvas id="scene" aria-label="A three-dimensional Roman neighborhood. Drag to rotate and tilt the camera; right-drag or Shift-drag to pan; scroll to zoom."></canvas>
   <header class="topbar">
    <a class="brand" href="/" aria-label="Back to Little Rome"><span class="emblem" aria-hidden="true">Ⅲ</span><span>LITTLE ROME<span class="subbrand">A TOWN IN MOTION</span></span></a>
    <div class="trial-label"><span class="live-dot"></span>3D trial<span class="divider"></span><span id="view-label">Town overview</span></div>
@@ -27,6 +27,11 @@
    <div class="selection"><span id="selected-name">Forum</span><span id="activity-status">Animated</span></div>
    <p id="selection-detail" class="selection-detail">Banners catch the breeze above the portico.</p>
    </div>
+  </section>
+  <section class="camera-tools" aria-label="Camera controls">
+   <div class="camera-heading"><span class="control-label">CAMERA</span><output id="camera-angle">Tilt 30°</output></div>
+   <div class="segmented" aria-label="Drag action"><button data-camera-mode="rotate" aria-pressed="true">Rotate</button><button data-camera-mode="pan" aria-pressed="false">Pan</button></div>
+   <div class="camera-presets"><button id="isometric" title="Return to the original isometric angle">Isometric</button><button id="overhead" title="Look down from above">Overhead</button></div>
   </section>
   <div id="loading" role="status">Preparing the neighborhood…</div>
   <div id="error" role="alert" hidden></div>
@@ -47,7 +52,7 @@
      <label class="speed-label" for="speed">Speed<select id="speed"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
     </div>
    </div>
-   <div class="control-bottom"><span><kbd>Space</kbd> pause<span class="hint-dot">·</span>Drag to pan<span class="hint-dot">·</span>Scroll to zoom</span><label class="motion-toggle"><input id="building-motion" type="checkbox" checked />Building motion</label><button id="reset">Reset view ↺</button></div>
+   <div class="control-bottom"><span><span id="drag-hint">Drag to rotate &amp; tilt</span><span class="hint-dot">·</span>Shift-drag to pan<span class="hint-dot">·</span>Scroll to zoom</span><label class="motion-toggle"><input id="building-motion" type="checkbox" checked />Building motion</label><button id="reset" title="Restore the town overview, original angle and zoom">Reset view ↺</button></div>
   </section>
  </main>
  <script type="module" src="./trial.mjs"></script>

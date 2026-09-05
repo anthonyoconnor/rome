@@ -13,6 +13,12 @@ inspectorToggle.addEventListener('click',()=>collapseInspector(!inspector.classL
 const scene=new THREE.Scene();scene.background=new THREE.Color('#939d79');
 const camera=new THREE.OrthographicCamera(-15,15,10,-10,.1,120);
 const look=new THREE.Vector3(0,.4,0),pan=new THREE.Vector3(),offset=new THREE.Vector3(32,26.1,32);
+const cameraRadius=offset.length(),isoYaw=Math.PI/4,isoTilt=Math.atan2(26.1,Math.hypot(32,32));
+const orbit={yaw:isoYaw,tilt:isoTilt,mode:'rotate'};
+function setCameraAngle(yaw,tilt){
+ orbit.yaw=((yaw%TAU)+TAU)%TAU;orbit.tilt=Math.max(Math.PI/18,Math.min(Math.PI*4/9,tilt));
+ document.querySelector('#camera-angle').textContent=`Tilt ${Math.round(orbit.tilt*180/Math.PI)}°`;
+}
 const state={time:0,buildingTime:0,buildingMotion:true,paused:false,speed:1,activity:'walk',view:'street',focus:'building',selectedBuilding:0,selected:0,zoom:1,travel:0};
 let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});}
@@ -118,30 +124,53 @@ document.querySelectorAll('[data-activity]').forEach(b=>b.addEventListener('clic
 document.querySelector('#pause').addEventListener('click',()=>setPaused(!state.paused));
 document.querySelector('#step').addEventListener('click',()=>{setPaused(true);advance(1/30);});
 document.querySelector('#speed').addEventListener('change',e=>state.speed=Number(e.target.value));
-document.querySelector('#reset').addEventListener('click',()=>setView('street'));
+document.querySelector('#reset').addEventListener('click',()=>{setView('street');setCameraAngle(isoYaw,isoTilt);});
+document.querySelectorAll('[data-camera-mode]').forEach(button=>button.addEventListener('click',()=>{
+ orbit.mode=button.dataset.cameraMode;
+ document.querySelectorAll('[data-camera-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ document.querySelector('#drag-hint').textContent=orbit.mode==='rotate'?'Drag to rotate & tilt':'Drag to pan';
+}));
+document.querySelector('#isometric').addEventListener('click',()=>setCameraAngle(isoYaw,isoTilt));
+document.querySelector('#overhead').addEventListener('click',()=>setCameraAngle(0,Math.PI*4/9));
+setCameraAngle(isoYaw,isoTilt);
 document.addEventListener('keydown',e=>{if(e.code==='Space'&&!['INPUT','SELECT','BUTTON'].includes(document.activeElement.tagName)){e.preventDefault();setPaused(!state.paused);}});
 
 let drag=null;
-canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY};canvas.setPointerCapture(e.pointerId);});
+canvas.addEventListener('pointerdown',e=>{
+ if(drag||e.button>2)return;
+ drag={id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,moved:false,select:e.button===0&&!e.shiftKey,mode:e.button!==0||e.shiftKey?'pan':orbit.mode};
+ canvas.setPointerCapture(e.pointerId);
+});
 canvas.addEventListener('pointermove',e=>{
- if(!drag)return;
+ if(!drag||drag.id!==e.pointerId)return;
  const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
- const units=(camera.right-camera.left)/canvas.clientWidth/camera.zoom;
- pan.x-=dx*units*.707;pan.z+=dx*units*.707;
- pan.x+=dy*units*.98;pan.z+=dy*units*.98;
+ drag.moved ||= Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)>=5;
+ if(drag.moved){
+  if(drag.mode==='rotate')setCameraAngle(orbit.yaw-dx*.007,orbit.tilt+dy*.005);
+  else{
+   // Project screen movement onto the ground at the current camera angle.
+   const units=(camera.right-camera.left)/canvas.clientWidth/camera.zoom;
+   const rightX=Math.cos(orbit.yaw),rightZ=-Math.sin(orbit.yaw),depth=dy*units/Math.sin(orbit.tilt);
+   pan.x-=dx*units*rightX;pan.z-=dx*units*rightZ;
+   pan.x-=depth*Math.sin(orbit.yaw);pan.z-=depth*Math.cos(orbit.yaw);
+  }
+ }
  drag.x=e.clientX;drag.y=e.clientY;
 });
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 canvas.addEventListener('pointerup',e=>{
- if(drag&&Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<5){
+ if(!drag||drag.id!==e.pointerId)return;
+ if(drag.select&&!drag.moved&&Math.hypot(e.clientX-drag.startX,e.clientY-drag.startY)<5){
   const rect=canvas.getBoundingClientRect();pointer.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
   const hits=raycaster.intersectObjects([...citizens.map(c=>c.root),...town.buildings.filter(b=>b.root.visible).map(b=>b.root)],true);
   const hit=hits.find(h=>!(h.object.material?.transparent&&h.object.material.opacity<.4));
   if(hit){let target=hit.object;while(target.parent&&target.parent!==scene)target=target.parent;const index=citizens.findIndex(c=>c.root===target);if(index>=0)selectCitizen(index,true);else{const building=town.buildings.findIndex(b=>b.root===target);if(building>=0)selectBuilding(building,true);}}
  }
  drag=null;
+ if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);
 });
-canvas.addEventListener('pointercancel',()=>drag=null);
+for(const event of ['pointercancel','lostpointercapture'])canvas.addEventListener(event,e=>{if(drag?.id===e.pointerId)drag=null;});
+canvas.addEventListener('contextmenu',e=>e.preventDefault());
 canvas.addEventListener('wheel',e=>{e.preventDefault();state.zoom=Math.max(.55,Math.min(2.7,state.zoom*Math.exp(-e.deltaY*.001)));},{passive:false});
 function resize(){renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);}
 window.addEventListener('resize',resize);resize();
@@ -164,9 +193,13 @@ function draw(now){
  desired.add(pan);
  const aspect=canvas.clientWidth/canvas.clientHeight;
  const viewHeight=state.view==='close'?(state.focus==='building'?building.view:5.8):state.view==='game'?canvas.clientHeight*2.15/36:Math.max(25,46/aspect);
- if(state.view!=='close'){desired.x-=Math.min(2.8,1.8/aspect);desired.z+=Math.min(2.8,1.8/aspect);}
+ if(state.view!=='close'){
+  const margin=Math.min(2.8,1.8/aspect)*Math.SQRT2;
+  desired.x-=margin*Math.cos(orbit.yaw);desired.z+=margin*Math.sin(orbit.yaw);
+ }
  if(first)look.copy(desired);else look.lerp(desired,1-Math.exp(-dt*10));
  camera.left=-viewHeight*aspect/2;camera.right=viewHeight*aspect/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;
+ offset.set(Math.sin(orbit.yaw)*Math.cos(orbit.tilt),Math.sin(orbit.tilt),Math.cos(orbit.yaw)*Math.cos(orbit.tilt)).multiplyScalar(cameraRadius);
  camera.zoom=state.zoom;camera.position.copy(look).add(offset);camera.lookAt(look);camera.updateProjectionMatrix();
  renderer.render(scene,camera);
  if(first){first=false;document.querySelector('#loading').hidden=true;document.documentElement.dataset.ready='true';}
