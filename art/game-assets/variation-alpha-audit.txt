@@ -1,0 +1,3 @@
+house4-residence.png: 1254x1254 RGBA; alpha0=874471; alpha1to254=697633; alpha255=412; outerEdgeMaxAlpha=1; nonzeroBounds=0,20,1235,1237
+house4-villa.png: 1536x1024 RGBA; alpha0=800893; alpha1to254=771971; alpha255=0; outerEdgeMaxAlpha=1; nonzeroBounds=0,19,1502,981
+meadow-detail.png: 1774x887 RGBA; alpha0=873168; alpha1to254=700370; alpha255=0; outerEdgeMaxAlpha=1; nonzeroBounds=0,0,1755,886

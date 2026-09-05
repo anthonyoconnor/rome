@@ -1,0 +1,655 @@
+{
+  "asset_count": 19,
+  "generation_method": "built-in image_gen",
+  "final_directory": "C:\\Users\\shant\\.codex\\visualizations\\2026\\09\\05\\01a07257-f103-75c2-b80f-1b6bf4b3fb0b\\building-assets",
+  "original_policy": "Original default saved images preserved; grass returned inline only and was decoded without pixel modification.",
+  "camera_request": "Orthographic southeast 2:1 isometric, world diagonals plus/minus 26.565 degrees; top-down textures excepted.",
+  "verification": "All 19 PNGs decode. 16 sprite PNGs have genuine RGBA alpha with fully transparent pixels; 3 textures are opaque RGB. Fine silhouettes inspected through alpha sample grids. Renderer should preserve alpha and native image aspect ratios.",
+  "notes": [
+    "Subject alpha is typically 252\u2013253 and borders include antialiasing. Some fully transparent pixels retain colored RGB beneath alpha 0; these disappear with correct compositing.",
+    "Requested texture seamless tiling and exact projection are prompt constraints; final in-game alignment and tiling are being checked by integration agent.",
+    "No source files in the game checkout were edited."
+  ],
+  "assets": [
+    {
+      "id": "house1",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house1.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-398c6167-431d-4f6e-b0ca-26d054446fb0.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house1.prompt.txt",
+      "comments": "Humble plaster-and-stone cottage with a weathered tile roof and thatch repair, tiny low-walled herb yard. Final is original RGBA generation; discarded checkerboard cleanup is not delivered.",
+      "sha256": "7b2b4bbeddfec81a454d5cd7578758c6fc77ad21699495239d8cb6dfadbadda5",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A modest humble early Roman cottage, low one-story structure with uneven limewashed plaster over stone, chunky wooden door, tiny window shutters, a rustic pitched roof mixing aged terracotta tiles and small thatch repair patches, a tiny chimney. A very small enclosed dirt yard with low rough stone walls, two amphorae and a modest herb patch. Economical and charming, realistic Roman rural architecture; roof must not look medieval or fantasy. Square-in-world 2x2 game-cell footprint, limited domestic scale.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          254
+        ],
+        "fully_transparent_pixels": 766825,
+        "translucent_pixels": 806039,
+        "fully_opaque_pixels": 0,
+        "bbox": [
+          0,
+          2,
+          1516,
+          1024
+        ],
+        "solid_bbox": [
+          153,
+          13,
+          1413,
+          1007
+        ]
+      }
+    },
+    {
+      "id": "house2",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house2.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-eb229597-8c1d-40d5-8c0d-453655ec163a.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house2.prompt.txt",
+      "comments": "Upgraded ivory cottage with terracotta porch, garden walls, flowers and vines.",
+      "sha256": "d3396985df59d204f0f266a795ee3c16d56e2b25b94dc5214b8d8ce3c4eb9894",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: An upgraded one-story Roman cottage, clean warm ivory plaster over limestone footings, finely detailed orange-red terracotta tiled roof with ridge tiles, timber door and shutters, a small tiled entrance porch. Small attached garden inside low stone walls with herbs, flowering pots, one delicate climbing vine and amphorae. Clearly more prosperous than the humble cottage while still a compact single-story family home. Square-in-world 2x2 game-cell footprint.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 649656,
+        "translucent_pixels": 922475,
+        "fully_opaque_pixels": 385,
+        "bbox": [
+          0,
+          9,
+          1254,
+          1230
+        ],
+        "solid_bbox": [
+          14,
+          110,
+          1245,
+          1180
+        ]
+      }
+    },
+    {
+      "id": "house3",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house3.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-1bccef49-f881-4f61-9fac-605e761f70b3.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house3.prompt.txt",
+      "comments": "One-story inward Roman courtyard house; blue central impluvium visible within red roof wings.",
+      "sha256": "b4b023ef2bb12b71d3585caad0ff13286b6a977b54856110f78db3c974f84552",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A prosperous Roman inward courtyard house, one-story square-plan domus with red terracotta roof wings arranged around a clearly visible open central courtyard, small brilliant blue rectangular impluvium pool, slender limestone colonnade and planted pots. Ivory plaster walls and stone footings; warm red painted wall accents. The courtyard opening faces the camera visibly, roof ring designed so pool is legible at small game size. Compact square-in-world 2x2 game-cell home footprint, no outside garden beyond small immediate plants.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 731435,
+        "translucent_pixels": 840933,
+        "fully_opaque_pixels": 148,
+        "bbox": [
+          0,
+          21,
+          1254,
+          1198
+        ],
+        "solid_bbox": [
+          13,
+          77,
+          1243,
+          1111
+        ]
+      }
+    },
+    {
+      "id": "house4",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house4.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-8d667a21-c662-4c91-b02a-3127010ca5a1.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/house4.prompt.txt",
+      "comments": "Splendid two-story courtyard townhouse with balconies, vines and a visible blue pool.",
+      "sha256": "c58ed4ad074147edb92d7ebecfd6b6758e1116aca8c257d28525a0bedd49fbdc",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A splendid two-story Roman courtyard townhouse, warm ivory plaster, limestone arches below, elegant red terracotta tile roof wings above an open green courtyard, small blue pool visible in courtyard, carved balconies, timber shutters, abundant delicate climbing grapevines and pots. Clearly a two-story upgrade from the Roman courtyard house; Roman classical detailing, no modern/medieval elements. Square-in-world 2x2 game-cell footprint, architecture upright and not sprawling.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 565154,
+        "translucent_pixels": 1007203,
+        "fully_opaque_pixels": 159,
+        "bbox": [
+          0,
+          21,
+          1240,
+          1254
+        ],
+        "solid_bbox": [
+          23,
+          28,
+          1231,
+          1225
+        ]
+      }
+    },
+    {
+      "id": "well",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/well.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-9df55c32-d724-4329-9057-b1c47db65787.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/well.prompt.txt",
+      "comments": "Circular stone well beneath timber supports and orange tile roof; bucket, herbs and amphorae.",
+      "sha256": "dad8b59565aaa1d35085c03e0c9fa5257e116794efca94898fbf62f4125b8a4a",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A single small roofed Roman village well. Circular low rough limestone well with dark water inside, rope pulley and wooden bucket, four rustic timber supports holding a miniature orange-red terracotta pitched tile roof. A few flowering herbs, small amphorae immediately beside base. Rich realistic wood grain and stone chips. Very compact square-in-world 1x1 game-cell footprint, roof and well fill the footprint naturally. No enclosed courtyard, no broad platform.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        1,
+        1
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 771469,
+        "translucent_pixels": 800598,
+        "fully_opaque_pixels": 449,
+        "bbox": [
+          0,
+          0,
+          1248,
+          1254
+        ],
+        "solid_bbox": [
+          120,
+          13,
+          1132,
+          1235
+        ]
+      }
+    },
+    {
+      "id": "market",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/market.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-8f70a728-f30b-408f-bcbe-9dadbf859ad2.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/market.prompt.txt",
+      "comments": "Red-and-cream canvas market with wooden counters, produce crates, amphorae, baskets and sacks. Final uses imagegen cleanup variant.",
+      "sha256": "9cda4b8a5afc6f880bf46e1e7adf366daeecc7d57b3b0891f439b7e81d374f81",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A compact Roman open-air market stall with a faded red-and-cream striped canvas canopy supported by rustic timber poles, draped cloth folds and cords, wooden vendor counters, stacked crates containing fruit and vegetables, amphorae, baskets and sacks. Two connected stalls form one coherent roughly square-in-world 2x2 game-cell structure. Every wooden support aligns with world grid. Fine weathered canvas and hand-crafted timber detail; no shop signage, no people.\n",
+      "method": "built-in image_gen",
+      "edit_prompt_path": "C:\\Users\\shant\\.codex\\visualizations\\2026\\09\\05\\01a07257-f103-75c2-b80f-1b6bf4b3fb0b\\building-assets\\market.cleanup.prompt.txt",
+      "edit_prompt": "Use case: background-extraction.\nEdit target: the attached market building sprite. Keep the entire building, its perspective, geometry, detailing, colors, materials, lighting, all props, and immediate footprint unchanged.\nChange ONLY the background: remove every trace of the unwanted warm tan/brown/olive blurry glow and vignette around the building. All space outside actual architecture, props, and their narrow immediate dirt footprint must be genuinely fully transparent alpha=0. Transparent cutout PNG, clean anti-aliased edges, no matte, no background color, no checkerboard, no fog/blur/halo, no outside shadows. Do not re-render or redesign the building. Keep subject pixels opaque except appropriate edge antialiasing. Maintain full object within canvas with transparent margin.\n",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          254
+        ],
+        "fully_transparent_pixels": 811224,
+        "translucent_pixels": 761640,
+        "fully_opaque_pixels": 0,
+        "bbox": [
+          0,
+          0,
+          1482,
+          1024
+        ],
+        "solid_bbox": [
+          136,
+          11,
+          1400,
+          1008
+        ]
+      }
+    },
+    {
+      "id": "workshop",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/workshop.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-e22128ef-11d5-4724-851c-a64cb9573346.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/workshop.prompt.txt",
+      "comments": "Stone/timber pottery and wood shed, kiln, chimney, tools, amphorae and lumber, with tightly contained yard.",
+      "sha256": "8fad9a1b922b649321ca4600e135447c9f3e9c816506c5332da2b23bd240e881",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A compact ancient Roman pottery and woodworking workshop, rough stone and timber shed with a weathered tiled roof and lean-to wooden canopy, small stone kiln and modest chimney, outdoor sheltered bench with tools, carefully stacked pots, amphorae and short lumber pile. Lived-in work surfaces with authentic Roman simple craft equipment. Square-in-world 2x2 game-cell footprint; a small working yard contained tightly at feet.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          254
+        ],
+        "fully_transparent_pixels": 846245,
+        "translucent_pixels": 726619,
+        "fully_opaque_pixels": 0,
+        "bbox": [
+          0,
+          0,
+          1522,
+          1024
+        ],
+        "solid_bbox": [
+          86,
+          23,
+          1449,
+          961
+        ]
+      }
+    },
+    {
+      "id": "garden",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/garden.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-4dd85614-45dc-4080-b6ae-cd2f935e1bca.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/garden.prompt.txt",
+      "comments": "Small low-walled ornamental garden with fountain, olive tree, cypress, flowers and gravel paths.",
+      "sha256": "154bc56cb454f4f0180a29cdd4e95e4f0d0152d40db3e9e1b06626f5831c8ad5",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A lush compact Roman walled garden, low warm limestone walls around a perfectly square ground plot, a tiny central bubbling stone fountain, orderly flowering beds, herbs, one young olive tree and one slender cypress, small gravel paths. Fine leaves, white and yellow wildflowers and restrained pink blossoms. Square-in-world 1x1 game-cell footprint: small ornamental garden asset, not a huge park. Entire garden at natural ground level, no plinth or thick foundation slab.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        1,
+        1
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 773151,
+        "translucent_pixels": 799210,
+        "fully_opaque_pixels": 155,
+        "bbox": [
+          0,
+          17,
+          1254,
+          1254
+        ],
+        "solid_bbox": [
+          16,
+          74,
+          1240,
+          1164
+        ]
+      }
+    },
+    {
+      "id": "bath",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/bath.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-e8ea6bb7-ee36-417b-b0cb-d597b0f66259.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/bath.prompt.txt",
+      "comments": "Ornate domed Roman bathhouse with open blue front courtyard pool, red roofs and carved colonnade.",
+      "sha256": "66ae59afe0fe9c0564fc317d2210829d40445463fce3d8eecaae1a25dfb6a9f8",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: An ornate ancient Roman bathhouse in a compact square plan, creamy limestone and warm ivory stucco, red terracotta roof wings around a prominent small ribbed stone dome, arched clerestory windows, an open luminous blue bathing pool clearly visible at front-right within its columned courtyard. Rich little carved capitals and mosaics, subtle steam immediately above pool only. Square-in-world 2x2 game-cell footprint: compact civic building with pool integrated, no giant palace.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        2,
+        2
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 747578,
+        "translucent_pixels": 824843,
+        "fully_opaque_pixels": 95,
+        "bbox": [
+          0,
+          32,
+          1232,
+          1254
+        ],
+        "solid_bbox": [
+          44,
+          42,
+          1223,
+          1178
+        ]
+      }
+    },
+    {
+      "id": "theater",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/theater.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-635dfe2b-f5fc-4fe2-89df-c7a413b8f2c8.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/theater.prompt.txt",
+      "comments": "Open semicircular stepped limestone theater with orchestra and red-tiled classical stage backdrop.",
+      "sha256": "4155ab20214dcb0029ec42472da987069fff31a31c56f45e1806438498e7726c",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A semicircular ancient Roman stone theater, carefully detailed concentric stepped limestone seating curving around a small semicircular orchestra and straight raised stage. A classical red-tiled stage backdrop with columns and restrained blank red drapery. Grid align the straight stage and overall square-in-world 3x3 game-cell bounding footprint; open theater front facing camera so seating is fully visible. Realistic weathered stone blocks and precisely stepped aisles. This is an open semicircular theater, not a circular amphitheater or Colosseum.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        3,
+        3
+      ],
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          254
+        ],
+        "fully_transparent_pixels": 630201,
+        "translucent_pixels": 942663,
+        "fully_opaque_pixels": 0,
+        "bbox": [
+          0,
+          17,
+          1518,
+          1024
+        ],
+        "solid_bbox": [
+          79,
+          21,
+          1461,
+          1005
+        ]
+      }
+    },
+    {
+      "id": "forum",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/forum.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-1b936729-945d-4a43-a11b-f65af7ade1f4.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/forum.prompt.txt",
+      "comments": "Temple and low portico with small contained paved court, carved limestone and red-tiled roofs.",
+      "sha256": "70182d7a332e9ba973eadecb89d60f24c36ff5f9f4c50e63de61b65f68a34045",
+      "prompt": "Use case: stylized-concept\nAsset type: production building sprite for Little Rome, a premium isometric city builder.\nStyle reference: the viewed Little Rome early-settlement and flourishing-town gameplay concept images. Match their richly textured, lifelike miniature architecture and warm natural materials exactly: realistically weathered ivory plaster, rough pale limestone, numerous individually legible orange-red terracotta roof tiles, intricate timber, warm olive greenery, subtle painterly cohesion. Finely detailed premium prerendered game art, neither low-poly nor flat cartoon, no thick outlines.\nCamera: orthographic exact 2:1 isometric projection. World ground diagonal edges slope +26.565 degrees and -26.565 degrees. Square-in-world footprint projects as diamond with width twice its ground depth. View from south-east, see two front faces and roofs; vertical building edges remain vertical. Perfectly aligned to that world grid.\nLighting: warm sunlight from upper left, soft ambient occlusion within the structure, no large cast shadows outside its footprint.\nComposition: one single entire isolated building asset centered and fully visible on a 1024x1024 PNG canvas with genuine RGBA alpha transparency. Fill most canvas with architecture and leave safe transparent margin. Empty pixels must be truly transparent, not white, black, gray, checkerboard, a matte or a scenic backdrop. Do not draw transparency grid.\nGround treatment: architecture and only its immediately necessary courtyard earth/stone at feet, flat at ground level with narrow natural feathered edges. NO raised plinth, NO thick diorama slab, NO external streets, NO surroundings, NO extra trees beyond attached small garden planting.\nNo people, no UI, no labels, no lettering, no watermark.\n\nSubject: A Roman civic forum asset combining an elegant small classical limestone temple with pediment and six front columns plus a lower attached red-tiled portico enclosing one side of the immediate courtyard. Temple on the back-left portion of a square plan, portico on back-right, both grid-aligned; their fronts address a small paved open court. Rich carved stone details, roof tiles, a little vine planting, restrained red fabric banners without symbols or lettering. Temple and portico must read as a cohesive single civic building complex, fitting a square-in-world 3x3 game-cell footprint. Use only the courtyard needed within this footprint, no grand plaza extending beyond it. Stairs belong to temple, no raised platform under the whole asset.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": [
+        3,
+        3
+      ],
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 725382,
+        "translucent_pixels": 847067,
+        "fully_opaque_pixels": 67,
+        "bbox": [
+          0,
+          21,
+          1243,
+          1222
+        ],
+        "solid_bbox": [
+          17,
+          33,
+          1232,
+          1209
+        ]
+      }
+    },
+    {
+      "id": "grass-texture",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/grass-texture.png",
+      "original_path": null,
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/grass-texture.prompt.txt",
+      "comments": "Opaque top-down Mediterranean meadow material; mottled olive grass, small dry earth patches and micro pebbles. Tool returned inline PNG without default save path; decoded unmodified to destination.",
+      "sha256": "f72e4dc36d53db7571fec578a7bb5802e6566e753f9ed71a8036737e02926095",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: square 1024x1024 seamless tileable game material/albedo texture filling every pixel edge to edge, fully opaque. Perfectly orthographic TOP-DOWN view straight down on the surface, uniform scale across image, flat natural ambient light. Left/right and top/bottom edges must tile without seams. Detail everywhere, no focal subject, no horizon, no frame, no perspective, no directional cast shadows, no labels/text/watermark. Do not add buildings, large objects, figures, trees, or any surrounding scene.\n\nSubject: Mottled Mediterranean meadow ground surface: dense short olive-green and fresh muted green grass, small irregular patches of dry golden earth, micro pebbles, and sparse extremely tiny low white/yellow wildflowers. Complex fine natural detail that reads as lush countryside at a distant citybuilder scale, without conspicuous repeating spots or large flowers.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "alpha": null
+    },
+    {
+      "id": "road-texture",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/road-texture.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-2cf70f15-0d2d-48e1-ae3f-ca86f435f036.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/road-texture.prompt.txt",
+      "comments": "Opaque top-down warm pale irregular limestone paving material, narrow earthy joints and subtle stone texture.",
+      "sha256": "be5695c3eac54af8b7d2e2be8684f63f64ef7dde2464a138e3e96d3ba70f8069",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: square 1024x1024 seamless tileable game material/albedo texture filling every pixel edge to edge, fully opaque. Perfectly orthographic TOP-DOWN view straight down on the surface, uniform scale across image, flat natural ambient light. Left/right and top/bottom edges must tile without seams. Detail everywhere, no focal subject, no horizon, no frame, no perspective, no directional cast shadows, no labels/text/watermark. Do not add buildings, large objects, figures, trees, or any surrounding scene.\n\nSubject: Ancient weathered warm pale limestone Roman cobblestone paving, irregular fitted rounded polygonal paving stones in varied small/medium sizes, narrow dark earthy joints, subtle pores, chips and worn smooth tops. Restrained warm cream, sand and gray stone variation, very small flecks of moss sparingly in joints. A dense paving material, not a path viewed from afar.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "alpha": null
+    },
+    {
+      "id": "water-texture",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/water-texture.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-1a0136f3-cee2-4ab5-a434-7b2f40d58415.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/water-texture.prompt.txt",
+      "comments": "Opaque top-down clear deep teal river surface material with fine ripples and caustics.",
+      "sha256": "eb1cccfc0a18af61082866f6c4217baaa9eee2bb1d29e71259a77d2228713cdc",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: square 1024x1024 seamless tileable game material/albedo texture filling every pixel edge to edge, fully opaque. Perfectly orthographic TOP-DOWN view straight down on the surface, uniform scale across image, flat natural ambient light. Left/right and top/bottom edges must tile without seams. Detail everywhere, no focal subject, no horizon, no frame, no perspective, no directional cast shadows, no labels/text/watermark. Do not add buildings, large objects, figures, trees, or any surrounding scene.\n\nSubject: Clear deep teal Mediterranean river water surface with subtly varying emerald/turquoise/deep blue-green depths, realistic fine ripples and gentle caustics. No foam, no waves breaking, no banks, no boats, no reflections of buildings or recognizable objects, no horizon. Soft calm water material whose detail works well as a repeated tile.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB",
+      "alpha": null
+    },
+    {
+      "id": "olive-tree",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/olive-tree.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-bd3eb233-5a27-47fb-968c-e99006eaa0fc.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/olive-tree.prompt.txt",
+      "comments": "One mature silvery olive tree, full detailed branching crown, gnarly trunk and ground-contact roots.",
+      "sha256": "77f66f7fc78eeb2a0274bd34c263366cc538a85f9997c8694d78deb106c9124f",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: ONE SQUARE 1:1 canvas transparent PNG cutout with genuine RGBA transparency outside the subject. No background or blurry halo. No gradients or checkerboards. Entire object fully visible with comfortable transparent margin, finely antialiased edges.\nCamera: orthographic 2:1 isometric projection, ground diagonals \u00c2\u00b126.565 degrees, viewed from south-east. Vertical objects upright. Warm sun from upper left. No large external cast shadow, no plinth, no diorama base, no ground plane, no environment scenery, no labels, no people unless requested subject, no UI or watermarks.\n\nSubject: One mature Mediterranean olive tree with delicately branching broad canopy of silvery olive-green narrow leaves, finely detailed gnarly old gray-brown trunk, full tree visible from canopy crown to natural ground-contact roots. One single tree only, no dirt mound or circular base, no surrounding grass or rocks.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 730616,
+        "translucent_pixels": 841717,
+        "fully_opaque_pixels": 183,
+        "bbox": [
+          0,
+          12,
+          1228,
+          1254
+        ],
+        "solid_bbox": [
+          40,
+          28,
+          1223,
+          1233
+        ]
+      }
+    },
+    {
+      "id": "cypress-tree",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/cypress-tree.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-ff65023c-de46-4dfe-99b9-f08169d987cf.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/cypress-tree.prompt.txt",
+      "comments": "One narrow mature cypress with fine dark olive foliage, full tip and short trunk.",
+      "sha256": "5394d3a2a19efd2d3f0ee44e6d91534854a96c043ccc52071a30f47c225a04ce",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: ONE SQUARE 1:1 canvas transparent PNG cutout with genuine RGBA transparency outside the subject. No background or blurry halo. No gradients or checkerboards. Entire object fully visible with comfortable transparent margin, finely antialiased edges.\nCamera: orthographic 2:1 isometric projection, ground diagonals \u00c2\u00b126.565 degrees, viewed from south-east. Vertical objects upright. Warm sun from upper left. No large external cast shadow, no plinth, no diorama base, no ground plane, no environment scenery, no labels, no people unless requested subject, no UI or watermarks.\n\nSubject: One slender mature Italian cypress tree, tall narrow tapering spire canopy of densely detailed deep olive-green needle foliage, a short warm brown trunk visible at ground contact. Full tree from tip to trunk foot, a single tree only. No dirt mound or circular base, no surrounding grass or rocks.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1024,
+      "height": 1536,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          254
+        ],
+        "fully_transparent_pixels": 1258224,
+        "translucent_pixels": 314640,
+        "fully_opaque_pixels": 0,
+        "bbox": [
+          65,
+          14,
+          940,
+          1520
+        ],
+        "solid_bbox": [
+          361,
+          19,
+          676,
+          1509
+        ]
+      }
+    },
+    {
+      "id": "riverbank",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/riverbank.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-1be21c7e-ffbd-48dc-8e32-2456ae6b7113.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/riverbank.prompt.txt",
+      "comments": "Low rounded river stone cluster with reeds, grasses and tiny white/yellow flowers.",
+      "sha256": "c246934c8bad40f487792c3e0f927fbae2411c87391bce4eeea70a5300be64f1",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: ONE SQUARE 1:1 canvas transparent PNG cutout with genuine RGBA transparency outside the subject. No background or blurry halo. No gradients or checkerboards. Entire object fully visible with comfortable transparent margin, finely antialiased edges.\nCamera: orthographic 2:1 isometric projection, ground diagonals \u00c2\u00b126.565 degrees, viewed from south-east. Vertical objects upright. Warm sun from upper left. No large external cast shadow, no plinth, no diorama base, no ground plane, no environment scenery, no labels, no people unless requested subject, no UI or watermarks.\n\nSubject: One small low natural riverbank dressing cluster: several rounded weathered pale limestone and gray river stones in different sizes, a few thin short reeds and tiny white/yellow wildflowers between stones. A low irregular shallow cluster, suitable to scatter along river margins; no tall tree, no large ground patch, no water, no floor, no base or plinth.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 1026975,
+        "translucent_pixels": 545165,
+        "fully_opaque_pixels": 376,
+        "bbox": [
+          0,
+          19,
+          1225,
+          1254
+        ],
+        "solid_bbox": [
+          62,
+          199,
+          1200,
+          958
+        ]
+      }
+    },
+    {
+      "id": "boat",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/boat.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-1e6f5f5a-5850-4fa0-a2f9-1a95fb24a333.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/boat.prompt.txt",
+      "comments": "Wooden Roman rowboat with ribbed interior, bench seats, oar and coiled rope; no water.",
+      "sha256": "50cb86cec69068270a2afa3e44e7515010ad505dece19f9b0343abaeda5d52cf",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: ONE SQUARE 1:1 canvas transparent PNG cutout with genuine RGBA transparency outside the subject. No background or blurry halo. No gradients or checkerboards. Entire object fully visible with comfortable transparent margin, finely antialiased edges.\nCamera: orthographic 2:1 isometric projection, ground diagonals \u00c2\u00b126.565 degrees, viewed from south-east. Vertical objects upright. Warm sun from upper left. No large external cast shadow, no plinth, no diorama base, no ground plane, no environment scenery, no labels, no people unless requested subject, no UI or watermarks.\n\nSubject: One modest ancient Roman wooden river rowboat, weathered dark honey-brown planks, visible internal ribs and wooden bench seats, a small coil of rope and one simple oar resting inside. Entire boat floating in empty transparent space with NO water and NO shadow, oriented along one isometric world diagonal. No people, no sails, no mast.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 1099200,
+        "translucent_pixels": 472786,
+        "fully_opaque_pixels": 530,
+        "bbox": [
+          71,
+          9,
+          1192,
+          1254
+        ],
+        "solid_bbox": [
+          86,
+          179,
+          1160,
+          1079
+        ]
+      }
+    },
+    {
+      "id": "citizen",
+      "path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/citizen.png",
+      "original_path": "C:\\Users\\shant\\.codex\\generated_images\\01a07268-2a25-7151-aeba-926554887832\\exec-c493eb36-7ba4-4ce5-a923-2a0913aaa6b5.png",
+      "prompt_path": "C:/Users/shant/.codex/visualizations/2026/09/05/01a07257-f103-75c2-b80f-1b6bf4b3fb0b/building-assets/citizen.prompt.txt",
+      "comments": "Single walking Roman civilian in cream tunic, muted red sash and sandals, whole body visible.",
+      "sha256": "b1ae8b2e8a831dd706706dc6b8b572e001a769198058948ae84d62eced2d5d80",
+      "prompt": "Use case: stylized-concept\nAsset type: production environment asset for Little Rome, a premium isometric Roman city builder.\nArt style: match viewed Little Rome concept art; richly textured, lifelike premium prerendered game asset, detailed natural materials with subtle painterly cohesion, warm Mediterranean palette, no low-poly or flat cartoon look, no thick outlines.\nOutput: ONE SQUARE 1:1 canvas transparent PNG cutout with genuine RGBA transparency outside the subject. No background or blurry halo. No gradients or checkerboards. Entire object fully visible with comfortable transparent margin, finely antialiased edges.\nCamera: orthographic 2:1 isometric projection, ground diagonals \u00c2\u00b126.565 degrees, viewed from south-east. Vertical objects upright. Warm sun from upper left. No large external cast shadow, no plinth, no diorama base, no ground plane, no environment scenery, no labels, no people unless requested subject, no UI or watermarks.\n\nSubject: One single ordinary adult Roman male civilian in a cream linen knee-length tunic with muted red cloth sash and simple leather sandals, whole body shown in a relaxed midstride walking pose along an isometric world diagonal toward lower-right. Short dark hair, natural anatomy and human proportions, fine material details and readable silhouette appropriate for a tiny in-game citizen sprite. Full figure visible from head to sandals. No floor, no base, no shadow, no props or armor, no environment.\n",
+      "method": "built-in image_gen",
+      "world_footprint_cells": null,
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA",
+      "alpha": {
+        "range": [
+          0,
+          255
+        ],
+        "fully_transparent_pixels": 1313703,
+        "translucent_pixels": 257905,
+        "fully_opaque_pixels": 908,
+        "bbox": [
+          29,
+          19,
+          1210,
+          1230
+        ],
+        "solid_bbox": [
+          399,
+          35,
+          885,
+          1178
+        ]
+      }
+    }
+  ]
+}
