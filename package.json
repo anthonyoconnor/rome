@@ -10,6 +10,7 @@
     "build": "tsc --noEmit && vite build",
     "start": "vite preview --host 127.0.0.1",
     "check:mechanics": "node scripts/check-mechanics.mjs",
+    "check:citizens": "node scripts/check-citizens.mjs",
     "lint": "oxlint",
     "format": "oxfmt"
   },

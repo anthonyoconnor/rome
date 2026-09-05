@@ -25,6 +25,7 @@ Homes require water, then a market, then baths and 30 appeal, then a theater and
 
 ```sh
 npm run check:mechanics
+npm run check:citizens
 npm run build
 npm start
 ```
@@ -37,6 +38,7 @@ The mechanics checks cover construction/refunds, routed coverage, grace periods,
 - `src/game/simulation.ts`: deterministic town rules, progression, and economy.
 - `src/game/scene.ts`: textured landscape, building sprites, cast shadows, camera, selection, and animation.
 - `src/game/assets.ts`: artwork loading, transparent bounds, shadow masks, and housing variations.
+- `src/game/citizens.ts` and `citizen-art.ts`: street movement, gait timing, and the textured character rig.
 - `public/art/`: original rendered building, landscape, and citizen assets.
 - `src/game/Game.tsx`: controls, inspector, charter, and guidance.
 - `app/globals.css`: interface styling and responsive layout.

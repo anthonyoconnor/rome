@@ -1,0 +1,14 @@
+Use case: stylized-concept
+Asset type: single full-body character sprite for a runtime skeletal animation rig.
+
+Generate ONE isolated adult Roman male civilian on a GENUINELY TRANSPARENT background. Output PNG with real alpha transparency: every empty background pixel must have alpha 0. Absolutely no white background, gray background, checkerboard pattern or other background design.
+
+Character: adult man with short wavy brown hair, off-white short-sleeve knee-length linen tunic, narrow dark red edging around neckline, sleeve hems and tunic hem, red cloth waist sash, brown leather sandals. Fine material details and realistically proportioned anatomy, finely rendered stylized realism with clear readable silhouette. Warm light from upper-left, shading on the character only.
+
+View: elevated orthographic isometric camera. The character faces diagonally toward the screen UPPER-RIGHT, northeast. BACK THREE-QUARTER VIEW: we see the back of his head, the back of his tunic and sash, with only a little right-side profile visible. He is facing away from the viewer, toward upper-right.
+
+Pose for skeletal rigging: neutral upright body, both legs nearly straight, feet slightly separated sideways so both legs and both sandals can be distinguished. Both arms relaxed and hanging at his sides with a small transparent gap between each arm and torso. Hands fully visible and empty, relaxed fingers. No walking stride, no bent lifted knee, no raised arm.
+
+Composition: exactly one full-body figure, centered, entirely inside the canvas. Ample transparent margin above the head, below sandals and beside arms. Head, hands, both legs, both heels and sandal toes all completely visible. Consistent elevated orthographic view, no perspective distortion.
+
+No ground, no cast shadow, no contact shadow, no props, no text, no frame. One original character asset, transparent PNG with alpha=0 around the character.

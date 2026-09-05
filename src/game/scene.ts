@@ -1,6 +1,8 @@
 import { DEFS, SIZE, type Kind, type Service } from './config';
 import { adjacent, appealDetails, buildingAt, canPlace, flood, key, terrain, type Building, type City } from './simulation';
-import { buildingAsset, sprites, type AssetName } from './assets';
+import { buildingAsset, citizenFrames, sprites, type AssetName } from './assets';
+import { advanceCitizens, citizenPose, type Citizen } from './citizens';
+import { CITIZEN_POSES } from './citizen-art';
 
 export interface Camera { x: number; y: number; zoom: number; }
 export interface View { camera: Camera; hover: [number,number] | null; tool: Kind | 'inspect' | 'demolish'; selected: number | null; overlay: 'none' | 'roads' | 'appeal' | Service; grid: boolean; time: number; }
@@ -13,7 +15,6 @@ export function pick(sx: number, sy: number, camera: Camera): Point {
 }
 const hash = (x: number, y: number) => { const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return n - Math.floor(n); };
 const shore = (y: number) => 3.7 + Math.sin(y * .24) * 1.15;
-interface Walker { x: number; y: number; nx: number; ny: number; px: number; py: number; progress: number; }
 
 export class Renderer {
  ctx: CanvasRenderingContext2D;
@@ -22,7 +23,7 @@ export class Renderer {
  private seen = new Map<number, number>();
  private tiers = new Map<number, number>();
  private sparkles = new Map<number, number>();
- private walkers: Walker[] = [];
+ private walkers: Citizen[] = [];
  private previousTime = 0;
  private signature = '';
  private occupied = new Set<string>();
@@ -165,14 +166,17 @@ export class Renderer {
    const size=DEFS[b.kind].size,[sx,sy]=p(b.x+size/2,b.y+size/2);
    if(this.isVisible(sx,sy,size*160))objects.push({depth:b.x+b.y+size,draw:()=>this.structure(b,v.time),shadow:()=>this.shadow(buildingAsset(b.kind,b.tier,b.x+b.y),sx,sy+size*32-3,size*128*(b.kind==='well'?.76:.97),.27)});
   }
-  const dt=c.speed?Math.min(.1,Math.max(0,v.time-this.previousTime)):0;this.previousTime=v.time;
-  const roads=[...c.connectedRoads],count=Math.min(65,Math.ceil(c.population/5));this.walkers.length=Math.min(this.walkers.length,count);
-  for(let i=0;i<count&&roads.length;i++){
-   if(!this.walkers[i]||!c.connectedRoads.has(key(this.walkers[i].nx,this.walkers[i].ny))){const[x,y]=roads[(i*7)%roads.length].split(',').map(Number);this.walkers[i]={x,y,nx:x,ny:y,px:x,py:y,progress:1};}
-   const w=this.walkers[i];w.progress+=dt*(.23+(i%3)*.055);
-   if(w.progress>=1){w.px=w.x;w.py=w.y;w.x=w.nx;w.y=w.ny;const choices=[[w.x+1,w.y],[w.x-1,w.y],[w.x,w.y+1],[w.x,w.y-1]].filter(([x,y])=>c.connectedRoads.has(key(x,y)));const forward=choices.filter(([x,y])=>x!==w.px||y!==w.py);const options=forward.length?forward:choices;if(options.length){const next=options[Math.floor(hash(i,Math.floor(v.time))*options.length)];w.nx=next[0];w.ny=next[1];}w.progress=0;}
-   const lane=.3+(i%3)*.18,x=w.x+(w.nx-w.x)*w.progress+lane,y=w.y+(w.ny-w.y)*w.progress+lane;
-   objects.push({depth:x+y,draw:()=>{const[a,b]=p(x,y),sprite=sprites.get('citizen');this.ellipse(a+2,b,4,2,'#18231c40');if(sprite)this.sprite('citizen',a,b-Math.abs(Math.sin(v.time*4+i))*.8,31*sprite.width/sprite.height,1,(w.nx-w.x)-(w.ny-w.y)<0);}});
+  const dt=Math.min(.1,Math.max(0,v.time-this.previousTime))*c.speed;this.previousTime=v.time;
+  advanceCitizens(this.walkers,c.connectedRoads,c.population,dt);
+  for(const citizen of this.walkers){
+   const {x,y,facing,frame}=citizenPose(citizen),[a,b]=p(x,y);
+   if(!this.isVisible(a,b,40))continue;
+   objects.push({depth:x+y,draw:()=>{
+    const pose=citizenFrames[facing*CITIZEN_POSES+frame];if(!pose)return;
+    const scale=1/3;
+    this.ellipse(a+2,b,4.5,2,'#18231c40');
+    ctx.drawImage(pose.image,pose.x,pose.y,pose.width,pose.height,a-pose.anchorX*scale,b-pose.anchorY*scale,pose.width*scale,pose.height*scale);
+   }});
   }
   const boatY=16+Math.sin(v.time*.018)*4,[bx,by]=p(1.8,boatY);
   objects.push({depth:boatY+1.8,draw:()=>{ctx.save();ctx.globalAlpha=.22;this.ellipse(bx+7,by+7,57,11,'#9ecbb5');ctx.restore();this.sprite('boat',bx,by+21+Math.sin(v.time)*1.2,113);}});
