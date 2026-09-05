@@ -1,6 +1,6 @@
 # Little Rome — browser city-builder prototype plan
 
-Working title. Implementation in progress.
+Implemented, including the final graphics pass. See README.md for controls and local commands.
 
 Build a small Roman town where arranging neighborhoods is the main activity. Players lay roads, provide services, watch modest homes become attractive townhouses, and use the resulting income to expand. Target a satisfying 20–30 minute scenario that can be continued as a sandbox, with unlimited pause and affordable changes of plan.
 
@@ -106,3 +106,4 @@ Commit working changes to Git in logical groups throughout implementation.
 Keep simulation, configuration, rendering, and interface code separate. Use a fixed simulation step independent of drawing speed. All state lives in memory for the current session. Stop simulation while the page is hidden.
 
 Use a lightweight static browser build. No backend, authentication, cloud database, deployment pipeline, or production infrastructure. Balance values stay in one configuration file. Focus verification on actual mechanics and the completed browser experience.
+
