@@ -3,35 +3,41 @@
 <head>
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
- <meta name="description" content="A playable 3D character and walking animation trial for Little Rome." />
- <title>Little Rome · 3D citizen trial</title>
+ <meta name="description" content="Explore a Roman neighborhood with animated 3D buildings, fountains, markets and citizens." />
+ <title>Little Rome · 3D town trial</title>
  <link rel="stylesheet" href="./trial.css" />
 </head>
 <body>
  <main id="trial">
-  <canvas id="scene" aria-label="Animated three-dimensional Roman citizens walking on a stone road"></canvas>
+  <canvas id="scene" aria-label="A three-dimensional Roman neighborhood with animated buildings and walking citizens"></canvas>
   <header class="topbar">
-   <a class="brand" href="/" aria-label="Back to Little Rome"><span class="emblem" aria-hidden="true">Ⅲ</span><span>LITTLE ROME<span class="subbrand">CHARACTER STUDY</span></span></a>
-   <div class="trial-label"><span class="live-dot"></span>3D trial<span class="divider"></span><span id="view-label">Street view</span></div>
+   <a class="brand" href="/" aria-label="Back to Little Rome"><span class="emblem" aria-hidden="true">Ⅲ</span><span>LITTLE ROME<span class="subbrand">A TOWN IN MOTION</span></span></a>
+   <div class="trial-label"><span class="live-dot"></span>3D trial<span class="divider"></span><span id="view-label">Town overview</span></div>
    <a class="back" href="/">Back to town <span aria-hidden="true">↗</span></a>
   </header>
-  <section class="citizen-panel" aria-label="Choose a citizen">
-   <span class="eyebrow">ON THE ROAD</span>
-   <h1>Meet the citizens.</h1>
-   <p>Choose someone to take a closer look.</p>
-   <div id="citizen-list" class="citizen-list"></div>
-   <div class="selection"><span id="selected-name">Lucius</span><span id="activity-status">Walking</span></div>
+  <section class="citizen-panel" aria-label="Inspect the town">
+   <button id="inspector-toggle" class="inspector-toggle" aria-expanded="true" aria-controls="inspector-content">Explore town <span aria-hidden="true">+</span></button>
+   <div id="inspector-content">
+   <span class="eyebrow">EXPLORE THE NEIGHBORHOOD</span>
+   <h1>A little Roman town.</h1>
+   <p>Select a building or citizen to look closer.</p>
+   <div class="segmented subject-tabs" aria-label="Inspect buildings or citizens"><button data-subject="buildings" aria-pressed="true">Buildings</button><button data-subject="citizens" aria-pressed="false">Citizens</button></div>
+   <div id="building-list" class="building-list"></div>
+   <div id="citizen-list" class="citizen-list" hidden></div>
+   <div class="selection"><span id="selected-name">Forum</span><span id="activity-status">Animated</span></div>
+   <p id="selection-detail" class="selection-detail">Banners catch the breeze above the portico.</p>
+   </div>
   </section>
-  <div id="loading" role="status">Preparing the road…</div>
+  <div id="loading" role="status">Preparing the neighborhood…</div>
   <div id="error" role="alert" hidden></div>
-  <div class="scene-note"><span class="note-rule"></span>Stone road · afternoon light</div>
+  <div class="scene-note"><span class="note-rule"></span>Ten buildings · six citizens · afternoon light</div>
   <section class="controls" aria-label="Animation controls">
    <div class="control-row">
     <div class="control-group"><span class="control-label">VIEW</span><div class="segmented" id="views">
-     <button data-view="street" aria-pressed="true">Street</button><button data-view="close" aria-pressed="false">Close-up</button><button data-view="game" aria-pressed="false">Game scale</button>
+     <button data-view="street" aria-pressed="true">Town</button><button data-view="close" aria-pressed="false">Close-up</button><button data-view="game" aria-pressed="false">Game scale</button>
     </div></div>
     <span class="control-divider"></span>
-    <div class="control-group"><span class="control-label">MOVEMENT</span><div class="segmented" id="activities">
+    <div class="control-group"><span class="control-label">CITIZENS</span><div class="segmented" id="activities">
      <button data-activity="walk" aria-pressed="true">Walk</button><button data-activity="carry" aria-pressed="false">Carry</button><button data-activity="idle" aria-pressed="false">Stand</button>
     </div></div>
     <span class="control-divider"></span>
@@ -41,7 +47,7 @@
      <label class="speed-label" for="speed">Speed<select id="speed"><option value="0.25">¼×</option><option value="0.5">½×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
     </div>
    </div>
-   <div class="control-bottom"><span><kbd>Space</kbd> pause<span class="hint-dot">·</span>Drag to pan<span class="hint-dot">·</span>Scroll to zoom</span><button id="reset">Reset view ↺</button></div>
+   <div class="control-bottom"><span><kbd>Space</kbd> pause<span class="hint-dot">·</span>Drag to pan<span class="hint-dot">·</span>Scroll to zoom</span><label class="motion-toggle"><input id="building-motion" type="checkbox" checked />Building motion</label><button id="reset">Reset view ↺</button></div>
   </section>
  </main>
  <script type="module" src="./trial.mjs"></script>

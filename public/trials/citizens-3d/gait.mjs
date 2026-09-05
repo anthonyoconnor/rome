@@ -28,17 +28,17 @@ export function solveLimb(down, forward, upper, lower, bend = 1) {
 }
 
 // A continuous road circuit: two straight lanes and a semicircle at each end.
-export function roadPose(distance) {
- let d = wrap(distance, ROUTE_LENGTH);
- if (d < STRAIGHT) return { x: -STRAIGHT / 2 + d, z: -TURN_RADIUS, yaw: Math.PI / 2, straight: true };
- d -= STRAIGHT;
- if (d < Math.PI * TURN_RADIUS) {
-  const a = d / TURN_RADIUS;
-  return { x: STRAIGHT / 2 + Math.sin(a) * TURN_RADIUS, z: -Math.cos(a) * TURN_RADIUS, yaw: Math.PI / 2 - a, straight: false };
+export function roadPose(distance, straight = STRAIGHT, radius = TURN_RADIUS) {
+ let d = wrap(distance, straight * 2 + TAU * radius);
+ if (d < straight) return { x: -straight / 2 + d, z: -radius, yaw: Math.PI / 2, straight: true };
+ d -= straight;
+ if (d < Math.PI * radius) {
+  const a = d / radius;
+  return { x: straight / 2 + Math.sin(a) * radius, z: -Math.cos(a) * radius, yaw: Math.PI / 2 - a, straight: false };
  }
- d -= Math.PI * TURN_RADIUS;
- if (d < STRAIGHT) return { x: STRAIGHT / 2 - d, z: TURN_RADIUS, yaw: -Math.PI / 2, straight: true };
- d -= STRAIGHT;
- const a = d / TURN_RADIUS;
- return { x: -STRAIGHT / 2 - Math.sin(a) * TURN_RADIUS, z: Math.cos(a) * TURN_RADIUS, yaw: -Math.PI / 2 - a, straight: false };
+ d -= Math.PI * radius;
+ if (d < straight) return { x: straight / 2 - d, z: radius, yaw: -Math.PI / 2, straight: true };
+ d -= straight;
+ const a = d / radius;
+ return { x: -straight / 2 - Math.sin(a) * radius, z: Math.cos(a) * radius, yaw: -Math.PI / 2 - a, straight: false };
 }

@@ -47,9 +47,9 @@ See [the prototype plan](PROTOTYPE_PLAN.md) for scope and inspiration. No accoun
 
 ## Art direction
 
-### 3D character trial
+### 3D town trial
 
-Open `/trials/citizens-3d/` to review six actual 3D citizens on a stone road. Choose walking, carrying or standing; use the close-up and game-scale views, pause, step a frame, or slow the animation down. This is a separate visual trial and does not change the town renderer. See [trial notes](public/trials/citizens-3d/README.md). Run `node scripts/check-citizens-3d.mjs` for the gait and rig checks.
+Open `/trials/citizens-3d/index.html` to explore ten actual 3D buildings and six citizens. Select a building or citizen for a close-up. Buildings include moving awnings, banners, shutters and laundry; kiln fire and smoke; a working well bucket; fountains, pool water and steam. Pause, step and speed controls apply to the whole scene, with a separate building-motion toggle. This visual trial is independent of the playable town and its economy. See [trial notes](public/trials/citizens-3d/README.md). Run `node scripts/check-citizens-3d.mjs` and `node scripts/check-buildings-3d.mjs` for the rig, building-animation and layout checks.
 
 ### Current town
 
