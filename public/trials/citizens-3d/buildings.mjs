@@ -38,11 +38,56 @@ function windowFrame(parent,x,y,z,w=.66,h=.84,shutters=false){
   }
  }
 }
+// Every facade is built facing its own outward normal, including animated details.
+function wallFace(parent,x,z,yaw){const face=group(parent,[x,0,z]);face.rotation.y=yaw;return face;}
+function wallBands(parent,w,d,h,base=.19){
+ box(parent,M.stone,[0,base+.16,0],[w+.10,.28,d+.10]);
+ box(parent,M.edge,[0,base+h-.12,0],[w+.13,.17,d+.13]);
+ for(const x of [-1,1])for(const z of [-1,1])for(let row=0;row<Math.floor(h/.32);row++){
+  const wide=row%2?.33:.46,narrow=row%2?.46:.33;
+  box(parent,row%3?M.edge:M.stone,[x*(w/2-.11),base+.17+row*.32,z*(d/2-.11)],[wide,.22,narrow]);
+ }
+}
+function vent(parent,x,y,z,w=.52,h=.44){
+ box(parent,M.edge,[x,y,z+.04],[w+.18,h+.16,.10]);box(parent,M.opening,[x,y,z+.10],[w,h,.04]);
+ for(let i=0;i<4;i++)box(parent,M.wood,[x,y+(i-1.5)*h/4,z+.135],[w-.07,.045,.045]);
+}
+function roundel(parent,x,y,z,r=.19){
+ const frame=mesh(parent,new THREE.TorusGeometry(r,.045,6,20),M.edge,[x,y,z]);
+ const inset=cylinder(parent,r-.025,r-.025,.035,M.teal,[x,y,z]);inset.rotation.x=Math.PI/2;
+ box(parent,M.gold,[x,y,z+.025],[r*1.5,.035,.025]);box(parent,M.gold,[x,y,z+.025],[.035,r*1.5,.025]);
+ return frame;
+}
+function crate(parent,x,y,z,size=.62){
+ const c=group(parent,[x,y,z]);box(c,M.darkWood,[0,size/2,0],[size,size,size]);
+ for(const sign of [-1,1])for(let i=0;i<4;i++){
+  box(c,M.wood,[0,(i+.5)*size/4,sign*(size/2+.012)],[size+.03,size/4-.025,.045]);
+  box(c,M.wood,[sign*(size/2+.012),(i+.5)*size/4,0],[.045,size/4-.025,size+.03]);
+ }
+ for(let i=0;i<4;i++)box(c,M.wood,[(i-1.5)*size/4,size+.014,0],[size/4-.018,.04,size+.03]);
+ for(const sign of [-1,1]){const brace=box(c,M.edge,[0,size/2,sign*(size/2+.04)],[.05,size*1.22,.035]);brace.rotation.z=.68;}
+ return c;
+}
+function barrel(parent,x,z,y=0,scale=1){
+ const b=group(parent,[x,y,z]);b.scale.setScalar(scale);
+ cylinder(b,.30,.30,.70,M.wood,[0,.35,0],14);
+ for(const h of [.09,.58]){const band=mesh(b,new THREE.TorusGeometry(.307,.032,6,18),M.metal,[0,h,0]);band.rotation.x=Math.PI/2;}
+ for(let i=0;i<5;i++)box(b,M.darkWood,[(i-2)*.105,.708,0],[.012,.016,Math.sqrt(Math.max(0,.09-((i-2)*.105)**2))*2]);
+ return b;
+}
+function wallLamp(parent,x,y,z){
+ box(parent,M.metal,[x,y+.15,z+.10],[.09,.36,.18]);box(parent,M.metal,[x,y+.27,z+.22],[.27,.07,.25]);
+ box(parent,M.gold,[x,y+.07,z+.22],[.18,.27,.16]);
+ for(const side of [-1,1])box(parent,M.metal,[x+side*.085,y+.07,z+.31],[.025,.28,.025]);
+ box(parent,M.metal,[x,y-.10,z+.22],[.25,.06,.23]);
+}
 function roof(parent,w,d,y,rise=1.15){
  const hw=w/2,hd=d/2;
- const positions=[-hw,y,-hd,0,y+rise,-hd,0,y+rise,hd,-hw,y,hd, 0,y+rise,-hd,hw,y,-hd,hw,y,hd,0,y+rise,hd];
- const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geo.setIndex([0,2,1,0,3,2,4,6,5,4,7,6]);geo.computeVertexNormals();
- mesh(parent,geo,M.roof);
+ // Closed sloping slabs give the eaves a visible underside from low angles.
+ const slope=Math.atan2(rise,hw),length=Math.hypot(hw,rise);
+ for(const sign of [-1,1]){
+  const slab=box(parent,M.roof,[sign*hw/2,y+rise/2-.025,0],[length+.04,.13,d]);slab.rotation.z=-sign*slope;
+ }
  const tileGeo=new THREE.BoxGeometry(.35,.070,.42),countX=Math.ceil(hw/.34),countZ=Math.ceil(d/.39);
  const tiles=new THREE.InstancedMesh(tileGeo,M.roofLight,countX*countZ*2),dummy=new THREE.Object3D(),color=new THREE.Color();let i=0;
  for(const sign of [-1,1])for(let x=0;x<countX;x++)for(let z=0;z<countZ;z++){
@@ -54,9 +99,13 @@ function roof(parent,w,d,y,rise=1.15){
  tiles.castShadow=true;tiles.receiveShadow=true;parent.add(tiles);
  const ridge=cylinder(parent,.115,.115,d+.12,M.roofDark,[0,y+rise+.09,0]);ridge.rotation.x=Math.PI/2;
  for(const sign of [-1,1])box(parent,M.roofDark,[sign*hw,y-.035,0],[.14,.18,d+.14]);
- for(const z of [-hd+.13,hd-.13]){
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([-hw+.15,y,z,hw-.15,y,z,0,y+rise-.1,z],3));g.computeVertexNormals();
-  const pediment=mesh(parent,g,M.cream);pediment.material=new THREE.MeshStandardMaterial({color:'#eddfba',roughness:.95,side:THREE.DoubleSide});
+ for(const z of [-hd+.08,hd-.24]){
+  const triangle=new THREE.Shape();triangle.moveTo(-hw+.12,0);triangle.lineTo(hw-.12,0);triangle.lineTo(0,rise-.07);triangle.closePath();
+  mesh(parent,new THREE.ExtrudeGeometry(triangle,{depth:.16,bevelEnabled:false}),M.cream,[0,y-.04,z]);
+ }
+ for(const sign of [-1,1]){
+  box(parent,M.edge,[0,y-.07,sign*(hd-.07)],[w-.12,.13,.17]);
+  for(const side of [-1,1]){const fascia=box(parent,M.roofDark,[side*hw/2,y+rise/2,sign*hd],[length+.18,.15,.15]);fascia.rotation.z=-side*slope;}
  }
 }
 function column(parent,x,z,height=2.8,y=.20){
@@ -116,7 +165,7 @@ function puffs(parent,x,y,z,{steam=false,count=10}={}){
 function makeHome(tall=false){
  const root=new THREE.Group(),w=3.5,d=3.4,h=tall?4.7:2.9;
  box(root,M.stone,[0,.12,0],[w+.35,.24,d+.35]);box(root,tall?M.cream:M.plaster,[0,h/2+.19,0],[w,h,d]);
- box(root,M.edge,[0,.40,0],[w+.08,.16,d+.08]);
+ wallBands(root,w,d,h);
  doorway(root,-.55,d/2+.012);windowFrame(root,.94,1.35,d/2+.025,.63,.83,true);
  if(tall){
   box(root,M.edge,[0,2.75,0],[w+.12,.17,d+.12]);
@@ -125,9 +174,17 @@ function makeHome(tall=false){
   for(let i=0;i<8;i++)box(root,M.wood,[-1.2+i*.34,3.18,d/2+.68],[.035,.53,.035]);
   box(root,M.wood,[0,3.46,d/2+.68],[2.8,.07,.07]);
  }else laundry(root,w,d,1.25);
- // Side window returns make the model readable from the locked diagonal camera.
- const side=group(root,[w/2+.025,0,0]);side.rotation.y=Math.PI/2;windowFrame(side,0,1.45,0,.70,.80);
+ const rear=wallFace(root,0,-d/2-.025,Math.PI);
+ doorway(rear,-.73,0,2.12,.87);windowFrame(rear,.93,1.37,0,.63,.83,true);wallLamp(rear,-1.40,1.97,.04);
+ if(tall)for(const x of [-.93,.93])windowFrame(rear,x,3.23,0,.72,.98,true);
+ else{pot(rear,1.22,.51,0,.75);planter(rear,.31,.49,.46);}
+ for(const sign of [-1,1]){
+  const side=wallFace(root,sign*(w/2+.025),0,sign*Math.PI/2);
+  for(const x of [-.81,.81])windowFrame(side,x,1.40,0,.62,.80,true);
+  if(tall)for(const x of [-.81,.81])windowFrame(side,x,3.23,0,.67,.98,true);
+ }
  roof(root,w+.48,d+.48,h+.18,1.02);
+ for(const sign of [-1,1]){const gable=wallFace(root,0,sign*(d/2+.17),sign===1?0:Math.PI);roundel(gable,0,h+.51,.01,.16);}
  for(const sign of [-1,1])planter(root,sign*(w/2-.3),d/2+.55,.53);
  pot(root,w/2+.38,.80,0,.95);return root;
 }
@@ -135,10 +192,18 @@ function makeVilla(){
  const root=new THREE.Group();box(root,M.stone,[0,.1,0],[5.35,.20,4.8]);
  // Three separate wings surround an open garden court.
  for(const side of [-1,1]){
-  const wing=group(root,[side*1.83,0,0]);box(wing,M.cream,[0,1.49,0],[1.30,2.72,4.25]);roof(wing,1.68,4.63,2.86,.65);
+  const wing=group(root,[side*1.83,0,0]);box(wing,M.cream,[0,1.49,0],[1.30,2.72,4.25]);wallBands(wing,1.30,4.25,2.72,.13);roof(wing,1.68,4.63,2.86,.65);
   windowFrame(wing,0,1.32,2.14,.55,.73,true);
+  const outside=wallFace(wing,side*.665,0,side*Math.PI/2);
+  for(const x of [-1.35,0,1.35])windowFrame(outside,x,1.34,0,.56,.83);
+  const inside=wallFace(wing,-side*.665,0,-side*Math.PI/2);
+  doorway(inside,.32,0,2.04,.70);windowFrame(inside,-1.17,1.37,0,.49,.73);
+  const back=wallFace(wing,0,-2.14,Math.PI);windowFrame(back,0,1.32,0,.55,.73,true);
  }
- const rear=group(root,[0,0,-1.62]);box(rear,M.plaster,[0,1.46,0],[3.3,2.66,1.0]);roof(rear,3.7,1.4,2.80,.85);
+ const rear=group(root,[0,0,-1.62]);box(rear,M.plaster,[0,1.46,0],[3.3,2.66,1.0]);wallBands(rear,3.3,1,2.66,.13);
+ const rearRoof=group(rear);rearRoof.rotation.y=Math.PI/2;roof(rearRoof,1.4,3.7,2.86,.65);
+ const rearFace=wallFace(rear,0,-.515,Math.PI);windowFrame(rearFace,0,1.09,0,.81,1.18);
+ doorway(rear,0,.515,2.07,.79);
  box(root,M.edge,[0,.15,.28],[2.26,.12,3.14]);
  for(const x of [-1.12,1.12])for(const z of [-.9,.30,1.5])column(root,x,z,2.45);
  for(const x of [-1.12,1.12])box(root,M.edge,[x,2.67,.3],[.29,.21,3.22]);
@@ -149,10 +214,21 @@ function makeForum(){
  const root=new THREE.Group();
  for(let i=0;i<4;i++)box(root,M.edge,[0,.075+i*.15,1.13-i*.14],[5.8-i*.32,.15,5.0-i*.30]);
  box(root,M.cream,[0,2.13,-.6],[3.6,3.08,2.55]);
+ const hall=group(root,[0,0,-.6]);wallBands(hall,3.6,2.55,3.08,.59);
+ const back=wallFace(root,0,-1.892,Math.PI);back.position.y=.44;
+ doorway(back,0,0,2.19,.94);
+ for(const x of [-1.12,1.12])windowFrame(back,x,1.22,0,.52,1.11);
+ for(const sign of [-1,1]){
+  const side=wallFace(root,sign*1.818,-.6,sign*Math.PI/2);
+  for(const x of [-.67,.67])windowFrame(side,x,1.52,0,.61,1.25);
+  box(root,M.edge,[sign*1.71,2.10,-1.87],[.23,3.0,.16]);
+ }
  doorway(root,0,.69,2.55,1.20);
  for(const x of [-2.02,-.68,.68,2.02])column(root,x,2.16,3.13,.58);
  for(const sign of [-1,1])column(root,sign*2.02,.65,3.13,.58);
- box(root,M.edge,[0,3.79,.47],[4.93,.30,4.32]);roof(root,5.22,4.58,3.99,1.26);
+ box(root,M.edge,[0,3.79,.47],[4.93,.30,4.32]);roof(group(root,[0,0,.47]),5.22,4.58,3.99,1.26);
+ const rearGable=wallFace(root,0,-1.80,Math.PI);roundel(rearGable,0,4.49,.03,.24);
+ for(const sign of [-1,1]){const frieze=wallFace(root,sign*2.48,.47,sign*Math.PI/2);for(let i=0;i<10;i++)box(frieze,M.gold,[-1.88+i*.42,3.79,.025],[.10,.10,.055]);}
  const medallion=cylinder(root,.28,.28,.08,M.gold,[0,4.49,2.77]);medallion.rotation.x=Math.PI/2;
  for(const side of [-1,1]){
   cylinder(root,.033,.043,3.40,M.wood,[side*2.47,2.07,2.44]);
@@ -166,17 +242,25 @@ function makeMarket(){
   const stall=group(root,[side*1.28,0,0]);
   for(const x of [-1.03,1.03])for(const z of [-1.2,1.17])box(stall,M.wood,[x,1.43,z],[.12,2.72,.12]);
   box(stall,M.wood,[0,2.8,-1.2],[2.28,.14,.14]);box(stall,M.wood,[0,2.24,1.17],[2.28,.12,.12]);
+  for(const sign of [-1,1]){
+   const brace=box(stall,M.darkWood,[sign*.80,2.52,-1.2],[.09,.64,.09]);brace.rotation.z=-sign*.70;
+   box(stall,M.wood,[sign*1.03,1.30,-.56],[.10,.12,1.25]);
+  }
   const canopy=cloth(stall,{x:0,y:2.56,z:0,w:2.45,h:2.7,horizontal:true,striped:true,phase:side});canopy.rotation.x=-Math.PI*.43;
   cloth(stall,{x:0,y:2.14,z:1.31,w:2.43,h:.31,striped:true,phase:side});
+  const back=wallFace(stall,0,-1.31,Math.PI);cloth(back,{x:0,y:2.69,z:0,w:2.43,h:.25,striped:true,phase:side+.5});
   box(stall,M.wood,[0,.97,.85],[2.21,.22,.75]);
   for(let bin=0;bin<3;bin++){
    const x=(bin-1)*.68;box(stall,M.darkWood,[x,1.09,.87],[.62,.13,.65]);
    for(let i=0;i<7;i++)ball(stall,[M.apple,M.green,M.grape][bin],[x+Math.cos(i*2.4)*.18,1.23+(i%2)*.045,.87+Math.sin(i*2.4)*.19],[.105,.10,.105]);
   }
-  for(let i=0;i<3;i++){box(stall,M.wood,[-.80+i*.72,.41,-.65],[.62,.66,.63]);for(let slat=0;slat<3;slat++)box(stall,M.darkWood,[-.80+i*.72,.23+slat*.17,-.316],[.57,.035,.025]);}
+  for(let i=0;i<3;i++)crate(stall,-.78+i*.74,.10,-.70,.61);
+  crate(stall,-.78,.75,-.70,.47);pot(stall,.68,-.70,.73,.62);
+  box(stall,M.wood,[0,1.43,-1.03],[1.84,.11,.43]);
+  for(const x of [-.54,0,.54])pot(stall,x,-1.04,1.49,.47);
  }
  const sign=dynamic(group(root,[0,2.78,1.42]));box(sign,M.wood,[0,-.28,0],[.68,.46,.09]);
- const emblem=mesh(sign,new THREE.TorusGeometry(.10,.02,6,16),M.gold,[0,-.28,.061]);emblem.rotation.z=.15;
+ for(const side of [-1,1]){const emblem=mesh(sign,new THREE.TorusGeometry(.10,.02,6,16),M.gold,[0,-.28,side*.061]);emblem.rotation.z=.15;}
  animations.push(t=>sign.rotation.z=Math.sin(t*1.1)*.065);
  pot(root,2.15,1.1,0,1.0);pot(root,-2.15,1.18,0,.85);return root;
 }
@@ -188,6 +272,10 @@ function makeWell(){
  }
  const rim=mesh(root,new THREE.TorusGeometry(.77,.135,8,32),M.edge,[0,.96,0]);rim.rotation.x=Math.PI/2;
  for(const side of [-1,1])box(root,M.wood,[side*.95,1.57,0],[.16,2.72,.16]);
+ for(const side of [-1,1])for(const front of [-1,1]){
+  const brace=box(root,M.darkWood,[side*.95,2.56,front*.29],[.10,.67,.10]);brace.rotation.x=front*.65;
+ }
+ for(const side of [-1,1]){const face=wallFace(root,side*1.055,0,side*Math.PI/2);for(const y of [.57,1.85,2.67])ball(face,M.metal,[0,y,.01],[.045,.045,.025]);}
  box(root,M.wood,[0,2.83,0],[2.27,.18,.19]);roof(root,2.65,1.9,2.99,.67);
  const axle=dynamic(group(root,[0,2.45,0]));const spindle=cylinder(axle,.13,.13,2.1,M.wood,[0,0,0]);spindle.rotation.z=Math.PI/2;
  box(axle,M.wood,[1.16,-.16,0],[.09,.42,.09]);const grip=cylinder(axle,.06,.06,.25,M.darkWood,[1.29,-.33,0]);grip.rotation.z=Math.PI/2;
@@ -200,7 +288,14 @@ function makeWell(){
 }
 function makeWorkshop(){
  const root=new THREE.Group();box(root,M.stone,[0,.12,0],[4.5,.24,3.9]);box(root,M.plaster,[0,1.47,-.25],[4.04,2.64,2.84]);
- roof(root,4.6,3.33,2.92,1.08);
+ wallBands(group(root,[0,0,-.25]),4.04,2.84,2.64,.15);
+ roof(group(root,[0,0,-.25]),4.6,3.33,2.92,1.08);
+ const rear=wallFace(root,0,-1.686,Math.PI);doorway(rear,-.67,0,2.20,1.05);vent(rear,.92,1.97,.02,.72,.47);wallLamp(rear,-1.55,2.08,.02);
+ barrel(rear,.63,.47,.15,.72);crate(rear,1.40,.13,.40,.48);
+ for(const side of [-1,1]){
+  const face=wallFace(root,side*2.035,-.25,side*Math.PI/2);windowFrame(face,.55,1.34,0,.62,.86);vent(face,-.63,1.93,.01,.55,.40);
+ }
+ const gable=wallFace(root,0,-1.91,Math.PI);vent(gable,0,3.20,.02,.56,.34);
  arch(root,.76,.18,1.18,1.52,1.94,M.roofDark,.19);arch(root,.76,.18,1.39,1.17,1.60,M.opening,.035);
  windowFrame(root,-1.02,1.33,1.19,.68,.81);
  const chimney=group(root,[1.03,0,-.64]);box(chimney,M.roofDark,[0,3.87,0],[.59,2.66,.63]);
@@ -238,18 +333,32 @@ function makeGarden(){
   animations.push(t=>{const p=(t*.55+i*.25)%1;ripple.scale.setScalar(1+p*3);ripple.material.opacity=(1-p)*.36;});
  }
  for(const side of [-1,1]){box(root,M.wood,[side*1.48,.58,0],[.43,.12,1.42]);for(const z of [-.5,.5])box(root,M.edge,[side*1.48,.36,z],[.20,.40,.18]);}
+ for(const sign of [-1,1]){
+  for(let i=0;i<3;i++)box(root,M.edge,[0,.22,sign*(1.26+i*.26)],[.63,.09,.21]);
+  for(const x of [-.77,.77]){pot(root,x,sign*1.46,.20,.49);ball(root,M.leafLight,[x,.67,sign*1.46],[.21,.23,.21]);}
+ }
  return root;
 }
 function makeBath(){
  const root=new THREE.Group();box(root,M.stone,[0,.1,0],[5.7,.20,5.2]);
  box(root,M.plaster,[0,1.68,-1.25],[4.65,3.13,1.83]);
- for(const x of [-1.6,0,1.6]){arch(root,x,.26,-.31,.84,2.15,M.edge,.10);arch(root,x,.29,-.19,.63,1.94,M.opening,.025);}
- box(root,M.edge,[0,3.32,-1.25],[4.95,.22,2.12]);
- const dome=mesh(root,new THREE.SphereGeometry(1,32,16,0,TAU,0,Math.PI/2),M.roof,[0,3.42,-1.25],[1.36,1.05,1.36]);
- for(let i=0;i<12;i++){
-  const a=i/12*TAU,points=[];for(let j=0;j<12;j++){const p=j/11*Math.PI/2;points.push([Math.sin(p)*Math.cos(a)*1.38,3.42+Math.cos(p)*1.07,-1.25+Math.sin(p)*Math.sin(a)*1.38]);}tube(root,points,.025,M.edge);
+ wallBands(group(root,[0,0,-1.25]),4.65,1.83,3.13,.115);
+ const rear=wallFace(root,0,-2.18,Math.PI);
+ doorway(rear,0,0,2.20,1.02);
+ for(const x of [-1.50,1.50])windowFrame(rear,x,1.10,0,.76,1.46);
+ for(const x of [-.76,.76])wallLamp(rear,x,1.95,.02);
+ for(const side of [-1,1]){
+  const face=wallFace(root,side*2.34,-1.25,side*Math.PI/2);windowFrame(face,0,1.19,0,.90,1.31);
+  planter(rear,side*1.94,.58,.54);
  }
- ball(root,M.gold,[0,4.56,-1.25],[.12,.15,.12]);
+ for(const x of [-1.6,0,1.6]){arch(root,x,.26,-.31,.84,2.15,M.edge,.10);arch(root,x,.29,-.19,.63,1.94,M.opening,.025);}
+ box(root,M.edge,[0,3.32,-1.25],[4.95,.22,2.98]);
+ cylinder(root,1.40,1.40,.22,M.edge,[0,3.43,-1.25],32);
+ const dome=mesh(root,new THREE.SphereGeometry(1,32,16,0,TAU,0,Math.PI/2),M.roof,[0,3.54,-1.25],[1.36,1.05,1.36]);
+ for(let i=0;i<12;i++){
+  const a=i/12*TAU,points=[];for(let j=0;j<12;j++){const p=j/11*Math.PI/2;points.push([Math.sin(p)*Math.cos(a)*1.38,3.54+Math.cos(p)*1.07,-1.25+Math.sin(p)*Math.sin(a)*1.38]);}tube(root,points,.025,M.edge);
+ }
+ ball(root,M.gold,[0,4.68,-1.25],[.12,.15,.12]);
  box(root,M.edge,[0,.20,1.08],[4.14,.25,2.48]);box(root,M.teal,[0,.37,1.08],[3.73,.10,2.07]);water(root,0,.435,1.08,3.59,1.93);
  for(const x of [-2.36,2.36])for(const z of [-.10,1.93])column(root,x,z,2.70);
  for(const x of [-2.36,2.36])box(root,M.edge,[x,3.0,.91],[.52,.25,2.69]);
@@ -265,8 +374,22 @@ function makeTheater(){
   mesh(root,geo,row%2?M.cream:M.edge);
  }
  box(root,M.wood,[0,.33,-.88],[4.9,.32,1.5]);box(root,M.plaster,[0,1.82,-1.76],[5.70,3.33,.36]);
+ wallBands(group(root,[0,0,-1.76]),5.70,.36,3.33,.155);
+ const backstage=wallFace(root,0,-1.958,Math.PI);
+ for(const x of [-1.92,1.92])doorway(backstage,x,0,2.22,.84);
+ windowFrame(backstage,0,1.32,0,.78,1.35);wallLamp(backstage,-.93,2.03,.01);wallLamp(backstage,.93,2.03,.01);
+ for(const x of [-2.73,-.67,.67,2.73]){box(backstage,M.edge,[x,1.86,.05],[.18,3.22,.18]);box(backstage,M.cream,[x,3.41,.08],[.33,.17,.25]);}
+ crate(backstage,.54,.17,.50,.51);barrel(backstage,-.53,.50,.17,.72);
+ // A curved retaining facade completes the outside of the seating bowl.
+ const outerRadius=3.53,outerHeight=1.92;
+ for(let i=0;i<11;i++){
+  const a=(i+.5)/11*Math.PI,face=wallFace(root,Math.cos(a)*outerRadius,.10+Math.sin(a)*outerRadius,Math.PI/2-a);
+  arch(face,0,.23,0,.61,1.46,M.edge,.09);arch(face,0,.25,.10,.45,1.20,M.opening,.025);
+  box(face,M.edge,[0,outerHeight,.02],[.85,.17,.20]);
+  for(const side of [-1,1])box(face,M.stone,[side*.41,1.04,.025],[.10,1.72,.15]);
+ }
  for(const x of [-2.48,2.48])column(root,x,-1.46,3.25);
- box(root,M.edge,[0,3.62,-1.56],[6.10,.23,.83]);roof(root,6.43,1.06,3.81,.83);
+ box(root,M.edge,[0,3.62,-1.56],[6.10,.23,.83]);roof(group(root,[0,0,-1.56]),6.43,1.06,3.81,.83);
  arch(root,0,.50,-1.55,2.98,2.49,M.opening,.05);
  for(const side of [-1,1])cloth(root,{x:side*1.28,y:1.92,z:-1.33,w:.90,h:2.48,color:M.red,phase:side*2});
  for(const side of [-1,1]){cylinder(root,.035,.04,3.6,M.wood,[side*3.11,1.95,-1.72]);cloth(root,{x:side*3.11,y:2.98,z:-1.66,w:.48,h:.95,color:M.teal,phase:side});}

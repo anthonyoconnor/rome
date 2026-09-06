@@ -6,6 +6,8 @@ Open `/trials/citizens-3d/index.html` on the Little Rome development server. The
 
 Ten original procedural buildings cover every building type in the game: cottage, townhouse, courtyard home, Forum, market, workshop, well, garden, bathhouse and theater. Walls, roof tiles, columns, steps, shutters, stalls and props are actual 3D geometry. Static geometry is combined by material and roof tiles use instancing.
 
+The models are detailed around their full exterior for the orbit camera. Homes have rear entrances, windows and animated shutters on both sides, stone corner blocks, lamps and gable medallions. The courtyard home has windows on its outer wings and doors into the court. The Forum has rear access, side windows and a continuous decorated cornice. The workshop has a service door, ventilation grilles, a barrel and crates. The bathhouse has framed windows, rear access and a supported dome. The theater has backstage entrances and an arched retaining facade around its seating. Market stalls have rear shelves, fully modeled crates, canopy trim and timber bracing; the well and garden have detail visible around the perimeter. Gabled roofs use solid sloping slabs, closed gables and fascia on both ends, so their undersides remain visible at low camera angles.
+
 Select a building from the inspector or click it in the scene to focus the camera. Close-up hides neighboring buildings so the selected model is unobstructed; Town and Game scale show the whole neighborhood. The inspector collapses on narrow screens. The building descriptions explain the visible animation:
 
 - Homes: hinged shutters, moving laundry, and water in the courtyard.
