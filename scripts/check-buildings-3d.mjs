@@ -3,18 +3,20 @@ import { createBuildings } from '../public/trials/citizens-3d/buildings.mjs';
 import { Box3 } from '../public/trials/citizens-3d/vendor/three.module.min.js';
 import { roadPose, TURN_RADIUS, TAU } from '../public/trials/citizens-3d/gait.mjs';
 
-const town=createBuildings();
+const groundHeight=-.13,town=createBuildings(groundHeight);
+town.animate(0);
 assert.deepEqual(new Set(town.buildings.map(b=>b.kind)),new Set(['house','forum','market','workshop','well','garden','bath','theater']));
 assert.equal(town.buildings.length,10);
 for(const b of town.buildings){
  const bounds=new Box3().setFromObject(b.root);
+ assert.ok(Math.abs(bounds.min.y-groundHeight)<1e-6,`${b.name}: foundation must meet the terrain, got ${bounds.min.y}`);
  assert.ok(bounds.max.y-bounds.min.y>1.5,`${b.name} must be a volumetric model`);
  b.root.traverse(o=>{
   assert.ok(o.matrixWorld.elements.every(Number.isFinite),`${b.name}: invalid transform`);
   if(o.geometry){for(const attr of Object.values(o.geometry.attributes))assert.ok(attr.array.every(Number.isFinite),`${b.name}: invalid geometry`);}
  });
 }
-console.log('PASS: all eight building types exist as finite 3D models, including three home variants.');
+console.log('PASS: all eight building types exist as finite 3D models, with every foundation touching the terrain.');
 
 function snapshot(root){
  const result=[];

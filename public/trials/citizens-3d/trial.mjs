@@ -46,7 +46,7 @@ function stoneGeometry(width,depth,height,bevel=.035,radius=.035){
 }
 const road=new THREE.Group();scene.add(road);
 const foundation=new THREE.Mesh(stoneGeometry(34.8,5,.18,.055,.22),new THREE.MeshStandardMaterial({color:'#9a977f',roughness:1}));
-foundation.position.y=-.12;foundation.receiveShadow=true;foundation.castShadow=true;road.add(foundation);
+foundation.position.y=ground.position.y;foundation.receiveShadow=true;foundation.castShadow=true;road.add(foundation);
 const stoneMaterial=new THREE.MeshStandardMaterial({color:'#c9c1a7',roughness:.94});
 const stoneGeo=stoneGeometry(.76,.53,.12,.027,.025);
 const cells=[];
@@ -66,13 +66,13 @@ let ci=0;for(const sign of [-1,1])for(let i=0;i<43;i++){
  dummy.position.set((i-21)*.80,-.015,sign*2.34);dummy.rotation.set(0,0,0);dummy.scale.set(1,1,1);dummy.updateMatrix();curbs.setMatrixAt(ci,dummy.matrix);curbs.setColorAt(ci++,new THREE.Color('#d8d0b4').multiplyScalar(.90+random(i,sign)*.13));
 }curbs.castShadow=true;curbs.receiveShadow=true;road.add(curbs);
 
-const town=createBuildings();
+const town=createBuildings(ground.position.y);
 for(const building of town.buildings){
  scene.add(building.root);
  const nearEdge=building.z-Math.sign(building.z)*building.d/2;
  const length=Math.max(.35,Math.abs(nearEdge)-2.32);
- const path=new THREE.Mesh(stoneGeometry(1.5,length,.12,.025,.03),stoneMaterial);
- path.position.set(building.x,0,Math.sign(building.z)*(2.32+length/2));path.receiveShadow=true;scene.add(path);
+ const path=new THREE.Mesh(stoneGeometry(1.5,length,ROAD_HEIGHT-ground.position.y,.025,.03),stoneMaterial);
+ path.position.set(building.x,ground.position.y,Math.sign(building.z)*(2.32+length/2));path.receiveShadow=true;scene.add(path);
 }
 const buildingOutline=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1,.035,1)),new THREE.LineBasicMaterial({color:'#f4e3a4',transparent:true,opacity:.85}));scene.add(buildingOutline);
 
@@ -188,7 +188,7 @@ function draw(now){
  town.animate(state.buildingTime);
  for(let index=0;index<town.buildings.length;index++)town.buildings[index].root.visible=state.view!=='close'||(state.focus==='building'&&index===state.selectedBuilding);
  const selected=citizens[state.selected],building=town.buildings[state.selectedBuilding];ring.visible=state.focus==='citizen';ring.position.x=selected.root.position.x;ring.position.z=selected.root.position.z;
- buildingOutline.visible=state.focus==='building';buildingOutline.position.set(building.x,.25,building.z);buildingOutline.scale.set(building.w,1,building.d);
+ buildingOutline.visible=state.focus==='building';buildingOutline.position.set(building.x,ground.position.y+.02,building.z);buildingOutline.scale.set(building.w,1,building.d);
  desired.copy(state.view==='close'?(state.focus==='building'?building.root.position:selected.root.position):new THREE.Vector3(.6,0,0));desired.y=state.view==='close'?(state.focus==='building'?building.focusHeight-(innerWidth<=760?.5:.25):1.10):.8;
  desired.add(pan);
  const aspect=canvas.clientWidth/canvas.clientHeight;

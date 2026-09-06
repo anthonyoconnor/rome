@@ -413,7 +413,7 @@ function batchStatic(root){
  }remove.forEach(o=>o.removeFromParent());
 }
 
-export function createBuildings(){
+export function createBuildings(groundHeight=0){
  animations.length=0;
  const definitions=[
   {id:'forum',name:'Forum',kind:'forum',x:-11,z:-6.4,w:5.8,d:5.9,view:11,color:'#d1b879',motion:'Banners catch the breeze above the portico.',make:makeForum},
@@ -427,7 +427,15 @@ export function createBuildings(){
   {id:'bath',name:'Bathhouse',kind:'bath',x:7.6,z:6.0,w:5.8,d:6.5,view:11,color:'#628f85',motion:'Pool water shimmers as warm steam rises between the columns.',make:makeBath},
   {id:'well',name:'Well',kind:'well',x:13.3,z:4.7,w:3.0,d:3.0,view:8,color:'#8d7954',motion:'A turning windlass lowers and raises the bucket on its rope.',make:makeWell},
  ];
- const buildings=definitions.map(def=>{const root=def.make();batchStatic(root);const center=new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());root.position.set(def.x,.12,def.z);root.name=def.id;root.userData.building=def.id;return {...def,focusHeight:center.y,root};});
+ const buildings=definitions.map(def=>{
+  const root=def.make();
+  // Each model starts with its foundation. Ground that solid base, not moving effects.
+  const base=new THREE.Box3().setFromObject(root.children[0]);
+  batchStatic(root);
+  const center=new THREE.Box3().setFromObject(root).getCenter(new THREE.Vector3());
+  root.position.set(def.x,groundHeight-base.min.y,def.z);root.name=def.id;root.userData.building=def.id;
+  return {...def,focusHeight:center.y+root.position.y,root};
+ });
  const updates=[...animations];
  return {buildings,animate(time){for(const update of updates)update(time);},animationCount:updates.length};
 }
